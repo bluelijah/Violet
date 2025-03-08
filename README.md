@@ -7,6 +7,9 @@ DEPENDENCIES:
 npm init -y
 npm install express multer tesseract.js axios dotenv cors
 
+INSTALL GEMINI:
+pip install google-generativeai
+
 FOR MAC: 
 brew install tesseract
 
@@ -47,3 +50,11 @@ To run in development:
 uvicorn main:app --reload
 
 Check your shit on: http://127.0.0.1:8000
+
+TO RUN WEBPAGE:
+npm run dev - in frontend terminal
+
+TO RUN TESERACT:
+python3 ocr_test.py
+
+
