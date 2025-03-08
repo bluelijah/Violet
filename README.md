@@ -29,3 +29,21 @@ venv\Scripts\activate
 NEXT INSTALL PY TESSERACT LIBRARIES AND PILLOW:
 pip install pytesseract Pillow
 pip install Pillow
+
+
+FOR FASTAPI:
+
+If using Python:
+pip install fastapi
+
+If using Python 3:
+pip3 install fastapi
+
+NEXT INSTALL UVICORN (ASGI SERVER):
+
+pip install 'uvicorn[standard]'
+
+To run in development:
+uvicorn main:app --reload
+
+Check your shit on: http://127.0.0.1:8000
