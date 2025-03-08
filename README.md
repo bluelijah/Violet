@@ -18,5 +18,12 @@ Make sure to add Tesseract to your system's PATH (there's usually an option duri
 FOR LINUX: 
 sudo apt-get install tesseract-ocr
 
-NEXT INSTALL PY TESSERACT LIBRARIES:
+WORK INSIDE VIRTUAL ENV: ----- TO DEACTIVATE VENV: deactivate
+python3 -m venv venv
+source venv/bin/activate
+
+NEXT INSTALL PY TESSERACT LIBRARIES AND PILLOW:
 pip install pytesseract Pillow
+pip install Pillow
+
+

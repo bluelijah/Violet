@@ -52,3 +52,29 @@ anti-scam-web-service/
 └── README.md                  # Project documentation
 
 
+FOR PYTESSERACT:
+
+from PIL import Image
+import pytesseract
+
+# If Tesseract is not in your PATH, specify the path explicitly
+# pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'  # Windows example
+# pytesseract.pytesseract.tesseract_cmd = '/usr/local/bin/tesseract'  # macOS/Linux example
+
+# Open an image
+img = Image.open('image_to_scan.png')
+
+# Use Tesseract to extract text from the image
+text = pytesseract.image_to_string(img)
+
+print(text)
+
+
+
+NOTES:
+
+FOR TESSERACT IMAGE PROCESSING: { 
+image that you define in the tesseract read image code must be also in the same folder as the defined code, or past to a location the name 
+of the image must be specified, so probably need a renaming program that renames the user input, or has ambiguous function for name of image
+}
+
