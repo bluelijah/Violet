@@ -3,67 +3,25 @@ Hackathon X - VIOLET
 
 THIS IS A HACKATHON PROJECT WITH ELIJAH OLSON, GUY BENZEEV, JOSH LEE, AND DYLAN SOMETHING
 
-DEPENDENCIES:
-npm init -y
-npm install express multer tesseract.js axios dotenv cors
-
-
 WORK INSIDE VIRTUAL ENV: ----- TO DEACTIVATE VENV: deactivate
 MAC:
-python3 -m venv venv
+/opt/homebrew/bin/python3 -m venv venv
 source venv/bin/activate
 WINDOWS
 python3 -m venv venv
 venv\Scripts\activate
 
-INSTALL GEMINI:
-pip install google-generativeai
-pip install fastapi google-generativeai uvicorn
+INSTALL DEPENDENCIES:
+pip install fastapi uvicorn google-genai
+
+MUST RUN YOUR API KEY IN YOUR ENVIRONMENT (run config.py to test after api key command):
+export GEMINI_API_KEY="your_actual_api_key_here" 
 
 
-
-FOR FASTAPI:
-
-PYTHON:
-pip install fastapi
-
-PYTHON3:
-pip3 install fastapi
-
-NEXT INSTALL UVICORN (ASGI SERVER):
-
-pip install 'uvicorn[standard]'
-
-To run in development:
-uvicorn main:app --reload
-
+TO RUN FAST API:
+uvicorn main:backendApp --reload
 Check your shit on: http://127.0.0.1:8000 to see for fastapi and http://127.0.0.1:8000/gemini-endpoint to see gemini is working
 
 
-TO RUN WEBPAGE:
+TO RUN UI WEBPAGE:
 npm run dev - in frontend terminal
-
-
-
-
-
-TESERACT:
-    FOR MAC: 
-    brew install tesseract
-
-    FOR WINDOWS:
-    Download the Tesseract installer from the official Tesseract GitHub page.
-    Follow the instructions to install it.
-    Make sure to add Tesseract to your system's PATH (there's usually an option during installation to do this).
-
-    FOR LINUX: 
-    sudo apt-get install tesseract-ocr
-
-    TO RUN THE TEST FILE: 
-    LAUNCH VENV
-    INSTALL PY TESSERACT LIBRARIES AND PILLOW:
-    pip install pytesseract Pillow
-    pip install Pillowpython3 ocr_test.py
-
-
-
