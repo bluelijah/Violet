@@ -24,10 +24,10 @@ pip install fastapi google-generativeai uvicorn
 
 FOR FASTAPI:
 
-If using Python:
+PYTHON:
 pip install fastapi
 
-If using Python 3:
+PYTHON3:
 pip3 install fastapi
 
 NEXT INSTALL UVICORN (ASGI SERVER):
@@ -37,7 +37,8 @@ pip install 'uvicorn[standard]'
 To run in development:
 uvicorn main:app --reload
 
-Check your shit on: http://127.0.0.1:8000
+Check your shit on: http://127.0.0.1:8000 to see for fastapi and http://127.0.0.1:8000/gemini-endpoint to see gemini is working
+
 
 TO RUN WEBPAGE:
 npm run dev - in frontend terminal
