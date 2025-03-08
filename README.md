@@ -19,8 +19,12 @@ FOR LINUX:
 sudo apt-get install tesseract-ocr
 
 WORK INSIDE VIRTUAL ENV: ----- TO DEACTIVATE VENV: deactivate
+MAC:
 python3 -m venv venv
 source venv/bin/activate
+WINDOWS
+python3 -m venv venv
+venv\Scripts\activate
 
 NEXT INSTALL PY TESSERACT LIBRARIES AND PILLOW:
 pip install pytesseract Pillow
@@ -43,4 +47,3 @@ To run in development:
 uvicorn main:app --reload
 
 Check your shit on: http://127.0.0.1:8000
-
