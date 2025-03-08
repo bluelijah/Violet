@@ -29,3 +29,26 @@ git push origin --delete <branch-name>  # Delete remote branch
 git fetch                # Fetch latest changes from remote  
 git pull                 # Pull latest changes into current branch  
 git push origin <branch> # Push local changes to GitHub
+
+
+anti-scam-web-service/
+│
+├── backend/
+│   ├── controllers/           # Controllers for image processing and scam detection
+│   ├── routes/                # API routes (image processing, scam detection, etc.)
+│   ├── services/              # Services to integrate with Tesseract and Google Gemini
+│   ├── utils/                 # Utility functions (e.g., for image preprocessing)
+│   ├── app.js                 # Main entry point of the back-end (Express server)
+│   └── package.json           # Node.js dependencies (express, tesseract.js, axios, etc.)
+│
+├── frontend/
+│   ├── src/
+│   │   ├── components/        # Reusable UI components (image upload, results display)
+│   │   ├── pages/             # Web pages (e.g., Home, Results)
+│   │   ├── App.js             # Main React app component
+│   │   ├── api.js             # API functions to interact with back-end
+│   │   └── index.js           # React entry point
+│   └── package.json           # React dependencies (react, axios, etc.)
+│
+├── .env                       # Environment variables (API keys, configurations)
+└── README.md                  # Project documentation
