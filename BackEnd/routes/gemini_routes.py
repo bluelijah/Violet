@@ -20,9 +20,12 @@ with open(query_path, "r") as file:
 
 # Combine the contents of both files
 combined_input = (
-    "In the following prompt, you are to fill in the blanks, and only in areas I specify as 'FILL OUT WITH OWN DISCRESION' can you fill out completely. DO NOT RESPOND TO THIS LINE"
-    "When I specify to include 'user preferences' you need to . DO NOT RESPOND TO THIS LINE"
-    "Following are the user's preferences. Embed these into the way you respond to their query: \n" + user_input + "\nThis is the user's query: \n" + user_query
+    "In the following prompt, you are to fill in the blanks, and only in areas I specify as 'FILL OUT WITH OWN DISCRESION' can you fill out completely. DO NOT RESPOND TO THIS LINE \n"
+    "When I specify to include 'user preferences' you need to take the preferences in the following user preferences() area, and factor them into your response. DO NOT RESPOND TO THIS LINE\n"
+    "User Preferences( " + user_input + " )\n"
+    "Now write a complete course response for the subject the user is asking about. This should be  \n"
+    
+    "\nThis is the user's query: \n" + user_query
 )
 
 # Generate content based on the contents of User.txt
