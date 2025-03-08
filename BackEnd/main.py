@@ -1,15 +1,15 @@
-import uvicorn
 from fastapi import FastAPI
-from routes.gemini_routes import router
+from fastapi.responses import FileResponse
+import os
 
 backendApp = FastAPI()
 
-#Gemini routes
-backendApp.include_router(router)
-
-@backendApp.get("/")
-async def root():
-    return {"message": "FastAPI app is running!"}
-
-if __name__ == "__main__":
-    uvicorn.run(backendApp, host="0.0.0.0", port=8000, reload=True)
+@backendApp.get("/get_geminiResponse")
+async def get_geminiResponse():
+    response_file_path = "/Users/eli/Desktop/Code/Projects/VIOLET/VIOLET/BackEnd/geminiResponse.txt"
+    
+    # Check if the file exists
+    if os.path.exists(response_file_path):
+        return FileResponse(response_file_path, media_type="text/plain", filename="geminiResponse.txt")
+    else:
+        return {"error": "Response file not found"}
