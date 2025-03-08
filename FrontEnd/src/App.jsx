@@ -1,35 +1,63 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
 
-function App() {
-  const [count, setCount] = useState(0)
+
+function FileUpload() {
+  const [selectedFile, setSelectedFile] = useState(null);
+
+  
+  const handleFileChange = (e) => {
+    setSelectedFile(e.target.files[0]);
+  };
+
+  
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!selectedFile) {
+      alert("Please select a file first!");
+      return;
+    }
+
+   
+    const formData = new FormData();
+    formData.append("file", selectedFile);
+
+    try {
+      const response = await fetch("http://localhost:5173/ocr/", {
+        method: "POST",
+        body: formData,
+      });
+      if (!response.ok) {
+        throw new Error("Error uploading file");
+      }
+      const data = await response.json();
+      console.log("Server response:", data);
+      
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
+    <div className="p-4">
+      <h1 className="text-xl font-bold mb-4">File Upload</h1>
+      <form onSubmit={handleSubmit}>
+        <input 
+          type="file" 
+          onChange={handleFileChange} 
+          className="mb-2"
+        />
+        <br />
+        <button 
+          type="submit" 
+          className="bg-blue-500 text-white py-2 px-4 rounded"
+        >
+          Upload
         </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+      </form>
+    </div>
+  );
 }
 
-export default App
+export default FileUpload;
