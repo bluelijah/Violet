@@ -34,18 +34,21 @@ git push origin <branch> # Push local changes to GitHub
 anti-scam-web-service/
 │
 ├── backend/
-│   ├── controllers/           # Controllers for image processing and scam detection
-│   ├── routes/                # API routes (image processing, scam detection, etc.)
-│   ├── services/              # Services to integrate with Tesseract and Google Gemini
-│   ├── utils/                 # Utility functions (e.g., for image preprocessing)
-│   ├── app.js                 # Main entry point of the back-end (Express server)
-│   └── package.json           # Node.js dependencies (express, tesseract.js, axios, etc.)
+│   ├── app/                   # Main application folder
+│   │   ├── controllers/       # Controllers to handle image processing & scam detection
+│   │   ├── routes/            # API routes (image upload, scam check, etc.)
+│   │   ├── services/          # Services like Tesseract OCR, Google Gemini integration
+│   │   ├── utils/             # Utility functions (e.g., image preprocessing)
+│   │   ├── app.py             # Main entry point (FastAPI server)
+│   │   ├── config.py          # Configuration file for environment variables
+│   │   └── requirements.txt   # Python dependencies (FastAPI, pytesseract, etc.)
+│   └── .env                   # Environment variables (API keys, configurations)
 │
 ├── frontend/
 │   ├── src/
 │   │   ├── components/        # Reusable UI components (image upload, results display)
 │   │   ├── pages/             # Web pages (e.g., Home, Results)
-│   │   ├── App.js             # Main React app component
+│   │   ├── App.jsx            # Main React app component
 │   │   ├── api.js             # API functions to interact with back-end
 │   │   └── index.js           # React entry point
 │   └── package.json           # React dependencies (react, axios, etc.)
