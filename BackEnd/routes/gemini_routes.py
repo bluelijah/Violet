@@ -19,7 +19,11 @@ with open(query_path, "r") as file:
     user_query = file.read()
 
 # Combine the contents of both files
-combined_input = "Following are the user's preferences. Embed these into the way you respond to their query: \n" + user_input + "\nThis is the user's query: \n" + user_query
+combined_input = (
+    "In the following prompt, you are to fill in the blanks, and only in areas I specify as 'FILL OUT WITH OWN DISCRESION' can you fill out completely. DO NOT RESPOND TO THIS LINE"
+    "When I specify to include 'user preferences' you need to . DO NOT RESPOND TO THIS LINE"
+    "Following are the user's preferences. Embed these into the way you respond to their query: \n" + user_input + "\nThis is the user's query: \n" + user_query
+)
 
 # Generate content based on the contents of User.txt
 response = client.models.generate_content(
