@@ -52,3 +52,8 @@ anti-scam-web-service/
 │
 ├── .env                       # Environment variables (API keys, configurations)
 └── README.md                  # Project documentation
+
+
+DEPENDENCIES:
+npm init -y
+npm install express multer tesseract.js axios dotenv cors
