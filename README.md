@@ -7,19 +7,6 @@ DEPENDENCIES:
 npm init -y
 npm install express multer tesseract.js axios dotenv cors
 
-INSTALL GEMINI:
-pip install google-generativeai
-
-FOR MAC: 
-brew install tesseract
-
-FOR WINDOWS:
-Download the Tesseract installer from the official Tesseract GitHub page.
-Follow the instructions to install it.
-Make sure to add Tesseract to your system's PATH (there's usually an option during installation to do this).
-
-FOR LINUX: 
-sudo apt-get install tesseract-ocr
 
 WORK INSIDE VIRTUAL ENV: ----- TO DEACTIVATE VENV: deactivate
 MAC:
@@ -29,9 +16,10 @@ WINDOWS
 python3 -m venv venv
 venv\Scripts\activate
 
-NEXT INSTALL PY TESSERACT LIBRARIES AND PILLOW:
-pip install pytesseract Pillow
-pip install Pillow
+INSTALL GEMINI:
+pip install google-generativeai
+pip install fastapi google-generativeai uvicorn
+
 
 
 FOR FASTAPI:
@@ -54,7 +42,27 @@ Check your shit on: http://127.0.0.1:8000
 TO RUN WEBPAGE:
 npm run dev - in frontend terminal
 
-TO RUN TESERACT:
-python3 ocr_test.py
+
+
+
+
+TESERACT:
+    FOR MAC: 
+    brew install tesseract
+
+    FOR WINDOWS:
+    Download the Tesseract installer from the official Tesseract GitHub page.
+    Follow the instructions to install it.
+    Make sure to add Tesseract to your system's PATH (there's usually an option during installation to do this).
+
+    FOR LINUX: 
+    sudo apt-get install tesseract-ocr
+
+    TO RUN THE TEST FILE: 
+    LAUNCH VENV
+    INSTALL PY TESSERACT LIBRARIES AND PILLOW:
+    pip install pytesseract Pillow
+    pip install Pillowpython3 ocr_test.py
+
 
 
