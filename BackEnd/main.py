@@ -24,7 +24,7 @@ backendApp.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
+# How we capture the users interests and learning style.
 @backendApp.post("/capture_user_input")
 async def capture_user_input(request: Request):
     data = await request.json()
@@ -40,3 +40,19 @@ async def capture_user_input(request: Request):
         file.write(user_text)
     
     return {"message": "User text saved successfully!"}
+# How we capture the course and depth.
+@backendApp.post("/capture_course_query")
+async def capture_course_query(request: Request):
+    data = await request.json()
+    course = data.get("course")
+    depth = data.get("depth")
+    if not course:
+        return {"error": "No course provided"}
+    
+    current_directory = os.path.dirname(os.path.abspath(__file__))
+    file_path = os.path.join(current_directory, "..", "TextFiles", "userQuery.txt")
+    
+    with open(file_path, "w") as file:
+        file.write(f"Course: {course}\nDepth: {depth}")
+    
+    return {"message": "Course query saved successfully!"}

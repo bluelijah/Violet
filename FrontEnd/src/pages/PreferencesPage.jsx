@@ -9,9 +9,9 @@ export default function App() {
     // make the button stay selected?
   };
 
+  const handleSubmit = async () => {
     // console.log("Selected Button:", selectedButton);
     // console.log("Text Input:", textInput);
-  const handleSubmit = async () => {
     const userText = `Learning Style: ${selectedButton}, User Preferences: ${textInput}`;
       
     try {
