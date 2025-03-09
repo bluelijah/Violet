@@ -1,1 +1,2 @@
-wants to learn about llm models
+Course: i want to learn to build a computer
+Depth: 7

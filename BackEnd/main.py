@@ -1,6 +1,7 @@
 from fastapi import FastAPI, Request
 from fastapi.responses import FileResponse
 from fastapi.middleware.cors import CORSMiddleware
+from routes.gemini_routes import generateGeminiResponse
 import os
 
 
@@ -54,5 +55,5 @@ async def capture_course_query(request: Request):
     
     with open(file_path, "w") as file:
         file.write(f"Course: {course}\nDepth: {depth}")
-    
+    geminiResponse = generateGeminiResponse()
     return {"message": "Course query saved successfully!"}
