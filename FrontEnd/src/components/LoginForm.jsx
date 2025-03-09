@@ -10,20 +10,20 @@ const LoginForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    navigate('/dashboard');
+    navigate('/preferences');
     // Handle form submission
   };
-  const handleSignup = (e) =>{
-    e.preventDefault();
-    navigate('/signup');
-  }
+  // const handleSignup = (e) =>{
+  //   e.preventDefault();
+  //   navigate('/signup');
+  // }
   
 
   return (
     <form onSubmit={handleSubmit} className="login-form">
       <InputField label="Username" />
       <InputField label="Password" type="password" />
-      <button type="button" className='text-button'
+      {/* <button type="button" className='text-button'
         onMouseOver={()=>setIsHovered(true)} 
         onMouseLeave={()=>setIsHovered(false)}
         onClick={handleSignup}
@@ -36,7 +36,7 @@ const LoginForm = () => {
           right: "200px",
           cursor: "pointer",
         }}
-        >Sign Up</button>
+        >Sign Up</button> */}
       <button type="submit" className="sign-in-btn">
         Sign In
       </button>
