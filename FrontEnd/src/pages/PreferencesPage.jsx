@@ -6,11 +6,25 @@ export default function App() {
 
   const handleButtonClick = (button) => {
     setSelectedButton(button);
+    // make the button stay selected?
   };
 
-  const handleSubmit = () => {
-    console.log("Selected Button:", selectedButton);
-    console.log("Text Input:", textInput);
+  const handleSubmit = async () => {
+    // console.log("Selected Button:", selectedButton);
+    // console.log("Text Input:", textInput);
+    const userText = `Learning Style: ${selectedButton}, User Preferences: ${textInput}`;
+      
+    try {
+      const response = await fetch("http://localhost:8000/capture_user_input", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ user_text: userText })
+      });
+      const data = await response.json();
+      console.log("Server response:", data);
+    } catch (error) {
+      console.error("Error:", error);
+    }
   };
 
   return (

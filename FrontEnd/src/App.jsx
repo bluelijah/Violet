@@ -1,18 +1,25 @@
-import React from "react";
-import LoginPage from "./pages/LoginPage";
-import PreferencesPage from "./pages/PreferencesPage";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom"
+import { useState } from 'react'
+import './App.css'
+import Login from './pages/LoginPage.jsx'
+import Preferences from './pages/PreferencesPage.jsx'
+//import Dashboard from './pages/Dashboard.jsx'
+import Signup from './pages/Signup.jsx'
+// add imports from pages
 
-import "./App.css"; // ✅ Import global styles
-
-
-
-const App = () => {
-  return (
-    <div className="app-container">
-      <PreferencesPage />
-    </div>
+function App(){
+  return(
+    <Router>
+      <div>
+        <Routes>
+          <Route path="/" element={<Login />}/>
+          <Route path="/preferences" element={<Preferences />}/>
+          {/* <Route path="/dashboard" element={<Dashboard />}/> */}
+          <Route path="/signup" element={<Signup />}/>
+        </Routes>
+      </div>
+    </Router>
   );
-};
+}
 
-export default App;
-
+export default App
