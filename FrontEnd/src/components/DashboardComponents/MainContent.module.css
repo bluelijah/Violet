@@ -1,0 +1,23 @@
+.mainContent {
+  background-color: #ffe4fe;
+  flex: 1;
+  padding: 18px 24px;
+}
+
+@media (width <= 991px) {
+  .mainContent {
+    padding: 16px;
+  }
+}
+
+.currentClass {
+  color: #000;
+  margin-bottom: 60px;
+  font-size: 48px;
+}
+
+@media (width <= 640px) {
+  .currentClass {
+    font-size: 32px;
+  }
+}

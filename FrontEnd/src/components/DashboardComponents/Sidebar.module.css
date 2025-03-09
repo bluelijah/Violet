@@ -1,0 +1,84 @@
+.sidebar {
+  background-color: #cb99c9;
+  width: 350px;
+  padding: 18px 12px;
+}
+
+@media (width <= 991px) {
+  .sidebar {
+    width: 100%;
+    padding: 16px;
+  }
+}
+
+.sidebarHeader {
+  flex-direction: column;
+  gap: 38px;
+  padding-right: 38px;
+  display: flex;
+}
+
+.titleContainer {
+  justify-content: space-between;
+  align-items: center;
+  display: flex;
+  position: relative;
+}
+
+.title {
+  color: #000;
+  font-size: 48px;
+  margin: 0;
+}
+
+@media (width <= 640px) {
+  .title {
+    font-size: 32px;
+  }
+}
+
+.addButton {
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  justify-content: center;
+  align-items: center;
+  width: 28px;
+  height: 28px;
+  margin-top: 19px;
+  padding: 0;
+  transition: transform 0.2s;
+  display: flex;
+}
+
+.addButton:hover {
+  transform: scale(1.1);
+}
+
+.addButton:focus {
+  border-radius: 4px;
+  outline: 2px solid #000;
+}
+
+.courseItem {
+  border-bottom: 2px solid #0000004f;
+  padding: 0 7px 0 10px;
+}
+
+.courseTitle {
+  color: #000;
+  margin-bottom: 4px;
+  font-size: 32px;
+}
+
+@media (width <= 640px) {
+  .courseTitle {
+    font-size: 24px;
+  }
+}
+
+.courseName {
+  color: #000;
+  font-size: 16px;
+  margin: 0;
+}

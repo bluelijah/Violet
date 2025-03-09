@@ -1,0 +1,53 @@
+.step {
+  text-align: left;
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  border-radius: 4px;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 8px;
+  padding: 12px;
+  transition: background-color 0.2s;
+  display: flex;
+}
+
+.step:hover {
+  background-color: #0000000d;
+}
+
+@media (width <= 640px) {
+  .step {
+    margin-bottom: 4px;
+  }
+}
+
+.stepTitle {
+  color: #000;
+  font-size: 48px;
+  margin: 0;
+}
+
+@media (width <= 640px) {
+  .stepTitle {
+    font-size: 32px;
+  }
+}
+
+.icon {
+  font-size: 24px;
+  transition: transform 0.2s;
+}
+
+.iconUp {
+  transform: rotate(180deg);
+}
+
+.stepContent {
+  color: #000;
+  padding: 0 12px;
+  font-size: 16px;
+  transition: max-height 0.3s ease-in-out;
+  overflow: hidden;
+}
