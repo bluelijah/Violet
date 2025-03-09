@@ -1,0 +1,11 @@
+.app {
+  min-height: 100vh;
+  font-family: "Inria Sans", sans-serif;
+  display: flex;
+}
+
+@media (width <= 991px) {
+  .app {
+    flex-direction: column;
+  }
+}
