@@ -40,3 +40,19 @@
 .read-the-docs {
   color: #888;
 }
+
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  /* Remove or modify overflow to allow the sidebar to slide in */
+  overflow-x: hidden; /* or remove it altogether */
+}
+
+.app-container {
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(97deg, #fbecfa 16.84%, #9c009f 97.19%);
+  /* Remove flex centering so the sidebar stays pinned to the left */
+  position: relative;
+}

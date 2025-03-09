@@ -1,7 +1,7 @@
 .mainContent {
-  background-color: #ffe4fe;
-  flex: 1;
-  padding: 18px 24px;
+  flex: 1; /* so it expands to fill remaining space */
+  background-color: #fbcfe8;
+  padding: 1rem;
 }
 
 @media (width <= 991px) {

@@ -1,5 +1,6 @@
 "use client";
 import { AccordionProvider } from "../components/DashboardComponents/AccordionContext";
+import { DashboardProvider } from "../components/DashboardComponents/DashboardContext";
 
 import { Sidebar } from "../components/DashboardComponents/Sidebar";
 import { MainContent } from "../components/DashboardComponents/MainContent";
@@ -13,10 +14,12 @@ export default function DashboardPage() {
         rel="stylesheet"
       />
       <div className={styles.app}>
+      <DashboardProvider>
         <Sidebar />
         <AccordionProvider>
           <MainContent />
         </AccordionProvider>
+        </DashboardProvider>
       </div>
     </div>
   );
