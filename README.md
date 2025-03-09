@@ -25,3 +25,19 @@ Check your shit on: http://127.0.0.1:8000 to see for fastapi and http://127.0.0.
 
 TO RUN UI WEBPAGE:
 npm run dev - in frontend terminal
+
+
+
+
+
+
+
+
+
+
+SOURCES:
+ai.google.dev/gemini-api/docs/quickstart?lang=python 
+openai.com/index/chatgpt/
+aistudio.google.com
+geeksforgeeks.org
+stackoverflow.com 
