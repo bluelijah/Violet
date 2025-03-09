@@ -128,7 +128,7 @@ export function MainContent() {
 
   return (
     <main className={styles.mainContent} style={{ textAlign: "left" }}> {/* Align text to the left */}
-      <h2 className={styles.currentClass} style={{ textAlign: "left" }}>Current Class Name</h2>
+      <h2 className={styles.currentClass} style={{ textAlign: "left" }}>Current Course</h2>
       {steps.map((step, index) => (
         <StepAccordion
           key={index + 1}

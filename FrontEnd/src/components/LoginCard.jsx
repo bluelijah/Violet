@@ -87,7 +87,7 @@ const LoginCard = () => {
   return (
     <main style={styles.loginCard}>
       <h1 style={styles.title}>Violet</h1>
-      <p style={styles.subtitle}>Here to teach you a lesson</p>
+      <p style={styles.subtitle}>A place to learn anything</p>
       <LoginForm />
     </main>
   );
