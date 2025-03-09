@@ -4,10 +4,18 @@
   padding: 18px 12px;
 }
 
+.myList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+
 @media (width <= 991px) {
   .sidebar {
-    width: 100%;
-    padding: 16px;
+    width: 250px;
+    background-color: #d8b4fe; /* or whatever color */
+    padding: 1rem;
   }
 }
 
@@ -81,4 +89,14 @@
   color: #000;
   font-size: 16px;
   margin: 0;
+}
+
+.sidebarItem {
+  cursor: pointer;
+  padding: 0.5rem;
+  transition: background-color 0.3s ease;
+}
+
+.sidebarItem:hover {
+  background-color: #f0f0f0; /* Change this color to suit your design */
 }

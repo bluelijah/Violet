@@ -1,3 +1,4 @@
+
 "use client";
 import { StepAccordion } from "./StepAccordion";
 import styles from "./MainContent.module.css";
@@ -26,3 +27,22 @@ export function MainContent() {
     </main>
   );
 }
+/*
+
+
+"use client";
+import { useDashboard } from "./DashboardContext";
+import styles from "./MainContent.module.css";
+
+export function MainContent() {
+  const { selectedItem } = useDashboard();
+
+  return (
+    <main className={styles.mainContent}>
+      <h2 className={styles.currentClass}>{selectedItem || "No class selected"}</h2>
+      {/* Render your steps or details based on selectedItem * /}
+      <p>Additional content for {selectedItem} goes here...</p>
+    </main>
+  );
+}
+*/
