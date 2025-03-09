@@ -61,7 +61,7 @@ sanitized_course_title = re.sub(r'[\\/*?:"<>|]', "", course_title)
 
 file_name = f"{sanitized_course_title}.txt"
 
-response_directory = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "GeminiResponses")
+response_directory = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "FrontEnd", "public")
 
 os.makedirs(response_directory, exist_ok=True)
 
