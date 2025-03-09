@@ -1,10 +1,13 @@
 "use client";
 import React from "react";
 import InputField from "./InputField";
+import { useNavigate } from "react-router-dom";
 
 const LoginForm = () => {
+  const navigate = useNavigate();
   const handleSubmit = (e) => {
     e.preventDefault();
+    navigate('/preferences');
     // Handle form submission
   };
 
