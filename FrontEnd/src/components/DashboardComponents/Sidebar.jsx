@@ -38,7 +38,7 @@ import {useNavigate} from "react-router-dom";
       <aside className={styles.sidebar}>
         <div className={styles.sidebarHeader}>
           <header className={styles.titleContainer}>
-            <h1 className={styles.title}>My Classes</h1>
+            <h1 className={styles.title}>My History</h1>
             <button className={styles.addButton} aria-label="Add new class" onClick={handlerouting}>
               <svg
                 width="32"

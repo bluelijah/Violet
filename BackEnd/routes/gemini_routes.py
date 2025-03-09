@@ -107,11 +107,10 @@ def generateGeminiResponse():
     # Combine the contents of both files
     combined_input = (
         "In the following prompt, you are an expert course designer and educator creating a comprehensive course on: " + user_query + " using the following format" + structure_template + "\n"
-        "1. **Course Title**: A clear and concise course title, no more than 3 words, descript about the subject of study"
+        "1. **Course Title**: A clear and concise course title, no more than 3 words, descriptive about the subject of study\n"
         "2. **Prerequisites**: The second section of this course should outline all the pre-existing knowledge one needs prior to learning the material they asked about (for example one needs to know algebra to pursue calculus, or have taken physics before doing some level of dynamic engineering)\n"
         "3. **Course Content**: The third section should be a complete layout of the material that will be covered relating to their prompt and course they are asking about\n"
-        "4. **Resources**: The fourth section should be one that provides the user with resources for each part of the covered material, containing attached links. This is where you factor in the User preferences I above mentioned. Based on the user's preferences, you are to suggest different medias for learning they may enjoy more, or benefit from greater. You should provide them with a plethora of resources, and majorly ones that fit within their preferences.\n"
-        "When specified to include 'user preferences' you need to take the preferences in the following user preferences() area, and factor them into your response.\n"
+        "4. **Resources**: The fourth section should be one that provides the user with resources for each part of the covered material, containing attached links. This is where you factor in the User preferences mentioned above. Based on the user's preferences, you are to suggest different media for learning they may enjoy more, or benefit from greater. You should provide them with a plethora of resources, and majorly ones that fit within their preferences.\n"
         "User Preferences( " + user_input + " )\n"
     )
 
@@ -139,14 +138,20 @@ def generateGeminiResponse():
     # Sanitize the course title to create a valid file name
     sanitized_course_title = re.sub(r'[\\/*?:"<>|]', "", course_title)
 
-    file_name = f"{sanitized_course_title}.txt"
-
+    # Define the path for GeminiReturn.txt in the public directory
     response_directory = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "FrontEnd", "public")
-
     os.makedirs(response_directory, exist_ok=True)
+    response_path = os.path.join(response_directory, "GeminiReturn.txt")
 
-    response_path = os.path.join(response_directory, file_name)
+    # Replace placeholders in structure.txt with generated content
+    formatted_response = structure_template.format(
+        course_title=course_title.strip(),
+        prerequisites=prerequisites.strip(),
+        course_content=course_content.strip(),
+        resources=resources.strip()
+    )
 
+    # Write the response to GeminiReturn.txt (overwrites on each call)
     with open(response_path, "w") as response_file:
         response_file.write(response.text)
 
@@ -155,7 +160,7 @@ def generateGeminiResponse():
 
     # Append the sanitized course title to allTitles.txt
     with open(all_titles_path, "a") as titles_file:
-        titles_file.write(f"{course_title}\n")
+        titles_file.write(f"{sanitized_course_title}\n")
 
     print(f"Response saved to {response_path}")
-    print(f"Course title '{course_title}' added to allTitles.txt")
+    print(f"Course title '{sanitized_course_title}' added to allTitles.txt")
