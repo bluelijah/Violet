@@ -24,6 +24,7 @@ Check your shit on: http://127.0.0.1:8000 to see for fastapi and http://127.0.0.
 
 
 TO RUN UI WEBPAGE:
+npm install react-router-dom 
 npm run dev - in frontend terminal
 
 
