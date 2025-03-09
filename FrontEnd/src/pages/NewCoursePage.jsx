@@ -4,11 +4,24 @@ function NewCoursePage() {
   const [course, setCourse] = useState('');
   const [depth, setDepth] = useState(5); // Default slider value
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     // Record the data (here we're logging and alerting the values)
     console.log('Course:', course, 'Depth:', depth);
-    alert(`Course: ${course}\nDepth: ${depth}`);
+    // alert(`Course: ${course}\nDepth: ${depth}`);
+    try {
+      const response = await fetch("http://localhost:8000/capture_course_query", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ course, depth })
+      });
+      const data = await response.json();
+      console.log("Server response:", data);
+      alert(`Server response: ${data.message}`);
+    } catch (error) {
+      console.error("Error:", error);
+      alert("Error submitting course query.");
+    }
   };
 
   return (

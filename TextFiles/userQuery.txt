@@ -1,1 +1,2 @@
-User Query file
+Course: i want to learn to build a computer
+Depth: 7
