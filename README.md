@@ -12,7 +12,7 @@ python3 -m venv venv
 venv\Scripts\activate
 
 INSTALL DEPENDENCIES:
-pip install fastapi uvicorn google-genai
+pip install fastapi uvicorn google-genai google-generativeai
 
 MUST RUN YOUR API KEY IN YOUR ENVIRONMENT (run config.py to test after api key command):
 export GEMINI_API_KEY="your_actual_api_key_here" 
