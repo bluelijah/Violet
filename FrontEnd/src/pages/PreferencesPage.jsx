@@ -165,7 +165,7 @@ export default function App() {
   const handleButtonClick = (button) => {
     setSelectedButton(button);
     // make the button stay selected?
-    navigate('/dashboard')
+    // navigate('/dashboard')
   };
 
   const handleSubmit = async () => {
@@ -184,6 +184,7 @@ export default function App() {
       navigate('/dashboard')
     } catch (error) {
       console.error("Error:", error);
+      navigate('/dashboard')
     }
   };
 
