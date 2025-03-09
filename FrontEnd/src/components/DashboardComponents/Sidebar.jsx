@@ -16,20 +16,17 @@ import {useNavigate} from "react-router-dom";
   
   // Access the items and the helper functions from the context
   const { items, selectedItem, setSelectedItem, addItem } = useDashboard();
-/*
-  // Example handler for adding a new item
-  function handleAdd() {
-    const name = prompt("Enter new class name:");
-    if (name) {
-      addItem(name);
-    }
-  }
-*/
+
     // Handle item click and perform any extra actions
     const handleItemClick = (item) => {
       setSelectedItem(item);
       // You can add additional functionality here:
       console.log("Selected item:", item);
+      const pathString = "../../../public/" + ("Selected item:", item) + ".txt"
+      console.log(pathString);
+
+      <MainContent filePath={pathString} />
+
       // For example, trigger a data fetch or navigation if needed.
     };
   
