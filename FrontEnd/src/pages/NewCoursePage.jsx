@@ -31,9 +31,24 @@ function NewCoursePage() {
     }
   };
 
-  return (
-    <div style={{ padding: '20px' }}>
-      <form onSubmit={handleSubmit}>
+return (
+    <div style={{ 
+      padding: '20px',
+      minHeight: '100vh',
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      background: 'linear-gradient(to right, #FBECFA, #9C009F)'
+    }}>
+      <form 
+        onSubmit={handleSubmit} 
+        style={{ 
+          background: 'white', 
+          padding: '20px', 
+          borderRadius: '10px', 
+          boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)' 
+        }}
+      >
         <div style={{ marginBottom: '15px' }}>
           <label>
             What would you like to learn?
@@ -45,7 +60,6 @@ function NewCoursePage() {
               placeholder="What would you like to learn?"
               style={{ width: '300px', padding: '8px', marginTop: '5px' }}
               disabled={isLoading}
-
             />
           </label>
         </div>
@@ -61,15 +75,15 @@ function NewCoursePage() {
               onChange={(e) => setDepth(e.target.value)}
               style={{ width: '300px', marginTop: '5px' }}
               disabled={isLoading}
-
             />
           </label>
         </div>
         <button           
           type="submit" 
           style={{ padding: '8px 16px' }}
-          disabled={isLoading}>
-           {isLoading ? 'Generating course content...' : 'Submit'}
+          disabled={isLoading}
+        >
+          {isLoading ? 'Generating course content...' : 'Submit'}
         </button>
         
         {isLoading && (
@@ -94,6 +108,10 @@ function NewCoursePage() {
       </form>
     </div>
   );
-}
 
+}
 export default NewCoursePage;
+
+
+
+  
