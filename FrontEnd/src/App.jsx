@@ -4,6 +4,7 @@ import './App.css'
 import Login from './pages/LoginPage.jsx'
 import Preferences from './pages/PreferencesPage.jsx'
 //import Dashboard from './pages/Dashboard.jsx'
+import Signup from './pages/Signup.jsx'
 // add imports from pages
 
 function App(){
@@ -14,6 +15,7 @@ function App(){
           <Route path="/" element={<Login />}/>
           <Route path="/preferences" element={<Preferences />}/>
           {/* <Route path="/dashboard" element={<Dashboard />}/> */}
+          <Route path="/signup" element={<Signup />}/>
         </Routes>
       </div>
     </Router>
