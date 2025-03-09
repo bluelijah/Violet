@@ -92,7 +92,6 @@ def generateGeminiResponse():
     user_path = os.path.join(current_directory, "..", "..", "TextFiles", "user.txt")
     query_path = os.path.join(current_directory, "..", "..", "TextFiles", "userQuery.txt")
     structure_path = os.path.join(current_directory, "..", "..", "TextFiles", "structure.txt")
-    #response_path = os.path.join(current_directory, "..", "..", "TextFiles", "geminiResponse.txt")
 
     # Read the contents of user.txt
     with open(user_path, "r") as file:
@@ -148,15 +147,15 @@ def generateGeminiResponse():
 
     response_path = os.path.join(response_directory, file_name)
 
-    # Replace placeholders in structure.txt with generated content
-    formatted_response = structure_template.format(
-        course_title=course_title.strip(),
-        prerequisites=prerequisites.strip(),
-        course_content=course_content.strip(),
-        resources=resources.strip()
-    )
-
     with open(response_path, "w") as response_file:
         response_file.write(response.text)
 
+    # Path to store all course titles, relative path for portability
+    all_titles_path = os.path.join(current_directory, "..", "..", "FrontEnd", "frontEndTextFiles", "allTitles.txt")
+
+    # Append the sanitized course title to allTitles.txt
+    with open(all_titles_path, "a") as titles_file:
+        titles_file.write(f"{course_title}\n")
+
     print(f"Response saved to {response_path}")
+    print(f"Course title '{course_title}' added to allTitles.txt")

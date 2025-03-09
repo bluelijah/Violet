@@ -28,6 +28,8 @@ dist-ssr
 *.sln
 *.sw?
 
+VIOLET/FrontEnd/public/
+
 #Text Files
 VIOLET/TextFiles/user.txt
 VIOLET/TextFiles/userQuery.txt

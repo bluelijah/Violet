@@ -1,2 +1,2 @@
-Course: i want to learn to build a computer
-Depth: 7
+Course: how to make pottery
+Depth: 4
