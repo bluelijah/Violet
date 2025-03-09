@@ -13,7 +13,7 @@ const LoginForm = () => {
     navigate('/preferences');
     // Handle form submission
   };
-  // const handleSignup = (e) =>{
+  // const handleSignup = (e) =>{   
   //   e.preventDefault();
   //   navigate('/signup');
   // }
