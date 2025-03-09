@@ -12,8 +12,7 @@ python3 -m venv venv
 venv\Scripts\activate
 
 INSTALL DEPENDENCIES:
-pip install fastapi uvicorn google-genai 
-
+pip install fastapi uvicorn google-genai google-generativeai
 
 MUST RUN YOUR API KEY IN YOUR ENVIRONMENT (run config.py to test after api key command):
 export GEMINI_API_KEY="your_actual_api_key_here" 
@@ -27,3 +26,19 @@ Check your shit on: http://127.0.0.1:8000 to see for fastapi and http://127.0.0.
 TO RUN UI WEBPAGE:
 npm install react-router-dom 
 npm run dev - in frontend terminal
+
+
+
+
+
+
+
+
+
+
+SOURCES:
+ai.google.dev/gemini-api/docs/quickstart?lang=python 
+openai.com/index/chatgpt/
+aistudio.google.com
+geeksforgeeks.org
+stackoverflow.com 
