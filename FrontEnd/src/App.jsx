@@ -14,7 +14,8 @@ function App(){
       <div>
         <Routes>
           <Route path="/" element={<Login />}/>
-          <Route path="/preferences" element={<Preferences />}/>
+          <Route path="/pre      navigate('/dashboard')
+ferences" element={<Preferences />}/>
           <Route path="/dashboard" element={<Dashboard />}/>
           {/* <Route path="/signup" element={<Signup />}/> */}
           <Route path='newCoursePage' element={<NewCoursePage />}/>
