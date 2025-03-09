@@ -2,6 +2,7 @@ from google import genai
 from fastapi import FastAPI
 from fastapi.responses import FileResponse
 import os
+import re
 
 # Initialize the GenAI client with your API key
 client = genai.Client(api_key="AIzaSyAVLtku81ikOCpwZlgURi-rqbmsluX4tQI")
@@ -10,7 +11,7 @@ current_directory = os.path.dirname(os.path.abspath(__file__))
 user_path = os.path.join(current_directory, "..", "..", "TextFiles", "user.txt")
 query_path = os.path.join(current_directory, "..", "..", "TextFiles", "userQuery.txt")
 structure_path = os.path.join(current_directory, "..", "..", "TextFiles", "structure.txt")
-response_path = os.path.join(current_directory, "..", "..", "TextFiles", "geminiResponse.txt")
+#response_path = os.path.join(current_directory, "..", "..", "TextFiles", "geminiResponse.txt")
 
 # Read the contents of user.txt
 with open(user_path, "r") as file:
@@ -47,6 +48,24 @@ course_title = sections[0] if len(sections) > 0 else user_query  # Default to qu
 prerequisites = sections[1] if len(sections) > 1 else "No prerequisites found."
 course_content = sections[2] if len(sections) > 2 else "No course content found."
 resources = sections[3] if len(sections) > 3 else "No resources found."
+
+# Extract the course title from the response text
+match = re.search(r'## Course Title:\s*(.*)', response.text)
+if match:
+    course_title = match.group(1).strip()  # Extract the course title after "## Course Title:"
+else:
+    course_title = "Default Course Title"  # Fallback if no match is found
+
+# Sanitize the course title to create a valid file name
+sanitized_course_title = re.sub(r'[\\/*?:"<>|]', "", course_title)
+
+file_name = f"{sanitized_course_title}.txt"
+
+response_directory = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "GeminiResponses")
+
+os.makedirs(response_directory, exist_ok=True)
+
+response_path = os.path.join(response_directory, file_name)
 
 # Replace placeholders in structure.txt with generated content
 formatted_response = structure_template.format(
