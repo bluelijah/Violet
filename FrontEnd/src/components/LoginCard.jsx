@@ -6,7 +6,7 @@ const LoginCard = () => {
   return (
     <main className="login-card">
       <h1 className="title">Violet</h1>
-      <p className="subtitle">Here to teach you a lesson</p>
+      <p className="subtitle">A place to learn anything</p>
       <LoginForm />
       <style jsx>{`
         .login-card {
