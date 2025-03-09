@@ -20,12 +20,12 @@ with open(query_path, "r") as file:
 
 # Combine the contents of both files
 combined_input = (
-    "In the following prompt, you are to fill in the blanks, and only in areas I specify as 'FILL OUT WITH OWN DISCRESION' can you fill out completely. DO NOT RESPOND TO THIS LINE \n"
-    "When I specify to include 'user preferences' you need to take the preferences in the following user preferences() area, and factor them into your response. DO NOT RESPOND TO THIS LINE\n"
+    "In the following prompt, you are an expert course designer and educator creating a comprehensive course on: " + user_query + ".\n"
+    "When specified to include 'user preferences' you need to take the preferences in the following user preferences() area, and factor them into your response.\n"
     "User Preferences( " + user_input + " )\n"
-    "Now write a complete course response for the subject the user is asking about. This should be  \n"
-    
-    "\nThis is the user's query: \n" + user_query
+    "The first section of this course should outline all the pre-existing knowledge one needs prior to learning the material they asked about (for example one needs to know algebra to pursue calculus, or have taken physics before doing some level of dynamic engineering)\n"
+    "The second section should be a complete layout of the material that will be covered relating to their prompt and course they are asking about\n"
+    "The third section should be one that provides the user with resources for each part of the covered material, containing attached links. This is where you factor in the User preferences I above mentioned. Based on the user's preferences, you are to suggest different medias for learning they may enjoy more, or benefit from greater. You should provide them with a plethora of resources, and majorly ones that fit within their preferences.\n"
 )
 
 # Generate content based on the contents of User.txt
