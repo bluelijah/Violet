@@ -1,0 +1,10 @@
+## Course Title: {course_title}
+
+## Prerequisites
+{prerequisites}
+
+## Course Content
+{course_content}
+
+## Resources
+{resources}
