@@ -20,7 +20,7 @@ pip install fastapi uvicorn google-genai google-generativeai
 STEP 3: 
 RUN FAST API (in backend folder with venv and dependencies)
 uvicorn main:backendApp --reload
-Check your shit on: http://127.0.0.1:8000 to see for fastapi and http://127.0.0.1:8000/gemini-endpoint to see gemini is working
+Check your page on: http://127.0.0.1:8000 to see for fastapi and http://127.0.0.1:8000/gemini-endpoint to see gemini is working
 
 STEP 4:
 TO RUN UI WEBPAGE (in frontend folder with venv and dependencies + react-router-dom):
