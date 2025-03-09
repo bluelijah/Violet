@@ -1,12 +1,15 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function App() {
   const [selectedButton, setSelectedButton] = useState(null);
   const [textInput, setTextInput] = useState("");
+  const navigate = useNavigate();
 
   const handleButtonClick = (button) => {
     setSelectedButton(button);
     // make the button stay selected?
+    navigate('/dashboard')
   };
 
   const handleSubmit = async () => {
@@ -22,6 +25,7 @@ export default function App() {
       });
       const data = await response.json();
       console.log("Server response:", data);
+      navigate('/dashboard')
     } catch (error) {
       console.error("Error:", error);
     }
