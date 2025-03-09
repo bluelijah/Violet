@@ -10,7 +10,7 @@ const LoginForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    navigate('/preferences');
+    navigate('/dashboard');
     // Handle form submission
   };
   const handleSignup = (e) =>{

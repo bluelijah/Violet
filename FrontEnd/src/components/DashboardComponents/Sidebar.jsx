@@ -1,12 +1,23 @@
+import { useTransition } from "react";
 import styles from "./Sidebar.module.css";
+import {useNavigate} from "react-router-dom";
+
+
+
 
 export function Sidebar() {
+  const navigate = useNavigate();
+
+  const handlerouting = () =>{
+    navigate('/newCoursePage')
+  };
+
   return (
     <aside className={styles.sidebar}>
       <div className={styles.sidebarHeader}>
         <header className={styles.titleContainer}>
           <h1 className={styles.title}>My Classes</h1>
-          <button className={styles.addButton} aria-label="Add new class">
+          <button className={styles.addButton} aria-label="Add new class" onClick={handlerouting}>
             <svg
               width="32"
               height="32"
