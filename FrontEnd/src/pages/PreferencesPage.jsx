@@ -2,14 +2,17 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import LearningTypeCard from "../components/PreferencesComponents/LearningTypeCard";
-import InputSection from "../components/PreferencesComponents/InputSection";
+import { useAuth } from "../contexts/AuthContext";
+import { Button, Card, ThemeToggle } from "../components/ui";
 import { EyeIcon, VolumeIcon, BookIcon, UserIcon } from "../components/PreferencesComponents/Icons";
 
 const PreferencesPage = () => {
   const [selectedType, setSelectedType] = useState("");
   const [description, setDescription] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
   const navigate = useNavigate();
+  const { updatePreferences, user } = useAuth();
 
   const learningTypes = [
     { id: "visual", label: "Visual", icon: <EyeIcon /> },
@@ -20,52 +23,78 @@ const PreferencesPage = () => {
 
   const handleContinue = async () => {
     if (!selectedType) {
-      alert("Please select a learning preference");
+      setError("Please select a learning preference");
       return;
     }
 
-    const userText = `Learning Style: ${selectedType}, User Preferences: ${description}`;
+    setLoading(true);
+    setError("");
 
     try {
-      const response = await fetch("http://localhost:8000/capture_user_input", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ user_text: userText }),
-      });
-      const data = await response.json();
-      console.log("Server response:", data);
+      await updatePreferences(selectedType, description);
       navigate("/dashboard");
     } catch (error) {
       console.error("Error:", error);
+      setError(error.message || "Failed to save preferences. Please try again.");
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <Container>
-      <link
-        href="https://fonts.googleapis.com/css2?family=Inria+Sans:wght@400;700&display=swap"
-        rel="stylesheet"
-      />
-      <Card>
+      <ThemeToggleWrapper>
+        <ThemeToggle />
+      </ThemeToggleWrapper>
+
+      <PreferencesCard>
+        <WelcomeText>Welcome, {user?.username}!</WelcomeText>
         <Title>Learning Preferences</Title>
+        <Subtitle>Tell us how you learn best so we can personalize your courses.</Subtitle>
+
+        {error && <ErrorMessage>{error}</ErrorMessage>}
+
         <LearningTypes>
           {learningTypes.map((type) => (
             <LearningTypeCard
               key={type.id}
-              type={type.id}
-              label={type.label}
-              icon={type.icon}
-              isSelected={selectedType === type.id}
-              onSelect={setSelectedType}
-            />
+              $isSelected={selectedType === type.id}
+              onClick={() => setSelectedType(type.id)}
+              role="button"
+              tabIndex={0}
+              aria-pressed={selectedType === type.id}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                  setSelectedType(type.id);
+                }
+              }}
+            >
+              <IconBox $isSelected={selectedType === type.id}>
+                {type.icon}
+              </IconBox>
+              <TypeLabel>{type.label}</TypeLabel>
+            </LearningTypeCard>
           ))}
         </LearningTypes>
-        <InputSection
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-        />
-        <ContinueButton onClick={handleContinue}>Continue</ContinueButton>
-      </Card>
+
+        <InputContainer>
+          <InputLabel>How Do You Best Learn?</InputLabel>
+          <TextArea
+            placeholder="Describe how you learn best..."
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+          />
+        </InputContainer>
+
+        <ButtonContainer>
+          <Button variant="secondary" onClick={() => navigate("/dashboard")} disabled={loading}>
+            Skip for now
+          </Button>
+          <Button onClick={handleContinue} disabled={loading}>
+            {loading ? "Saving..." : "Continue"}
+          </Button>
+        </ButtonContainer>
+      </PreferencesCard>
     </Container>
   );
 };
@@ -73,148 +102,168 @@ const PreferencesPage = () => {
 const Container = styled.main`
   width: 100%;
   min-height: 100vh;
-  background: linear-gradient(1deg, #fbecfa 4.65%, #9c009f 120.75%);
+  background: linear-gradient(135deg, ${props => props.theme.colors.gradientStart} 0%, ${props => props.theme.colors.gradientEnd} 100%);
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 20px;
+  position: relative;
 `;
 
-const Card = styled.section`
-  width: 921px;
-  border-radius: 5px;
-  padding: 40px;
-  position: relative;
-  background-color: #fff;
+const ThemeToggleWrapper = styled.div`
+  position: absolute;
+  top: 24px;
+  right: 24px;
+`;
 
-  @media (max-width: 991px) {
-    width: 90%;
-    padding: 20px;
-  }
+const PreferencesCard = styled(Card)`
+  width: 100%;
+  max-width: 900px;
+  animation: fadeIn 0.5s ease;
+`;
 
-  @media (max-width: 640px) {
-    width: 100%;
-    padding: 15px;
-  }
+const WelcomeText = styled.p`
+  font-size: 16px;
+  color: ${props => props.theme.colors.primary};
+  margin-bottom: 8px;
+  font-weight: 500;
 `;
 
 const Title = styled.h1`
-  font-family: "Inria Sans", sans-serif;
-  font-size: 48px;
-  color: #000;
-  margin-bottom: 40px;
+  font-size: 42px;
+  font-weight: 700;
+  background: linear-gradient(135deg, ${props => props.theme.colors.primary} 0%, ${props => props.theme.colors.accent} 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 8px;
 
   @media (max-width: 640px) {
     font-size: 32px;
-    margin-bottom: 20px;
   }
+`;
+
+const Subtitle = styled.p`
+  color: ${props => props.theme.colors.textSecondary};
+  font-size: 16px;
+  margin-bottom: 32px;
+`;
+
+const ErrorMessage = styled.div`
+  padding: 12px 16px;
+  background: ${props => props.theme.colors.errorBackground};
+  border: 1px solid ${props => props.theme.colors.error};
+  border-radius: 12px;
+  color: ${props => props.theme.colors.error};
+  font-size: 14px;
+  margin-bottom: 20px;
 `;
 
 const LearningTypes = styled.div`
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
   gap: 20px;
-  margin-bottom: 40px;
+  margin-bottom: 32px;
 
-  @media (max-width: 991px) {
-    flex-wrap: wrap;
-    justify-content: center;
+  @media (max-width: 800px) {
+    grid-template-columns: repeat(2, 1fr);
   }
 
-  @media (max-width: 640px) {
-    flex-direction: column;
-    align-items: center;
+  @media (max-width: 480px) {
+    grid-template-columns: 1fr;
   }
 `;
 
-const ContinueButton = styled.button`
-  position: absolute;
-  bottom: -60px;
-  right: 0;
-  color: #fff;
-  padding: 10px 20px;
-  border-radius: 5px;
-  border: none;
-  font-family: "Inria Sans", sans-serif;
-  font-size: 16px;
+const LearningTypeCard = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
   cursor: pointer;
-  background-color: #000;
+`;
 
-  @media (max-width: 640px) {
-    position: relative;
-    bottom: 0;
-    width: 100%;
-    margin-top: 20px;
+const IconBox = styled.div`
+  width: 100%;
+  aspect-ratio: 1;
+  max-width: 180px;
+  border-radius: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background: ${props => props.$isSelected ? props.theme.colors.primaryLight : props.theme.colors.inputBackground};
+  border: 3px solid ${props => props.$isSelected ? props.theme.colors.primary : 'transparent'};
+  box-shadow: ${props => props.$isSelected ? `0 0 0 4px ${props.theme.colors.primaryLight}` : 'none'};
+
+  &:hover {
+    background: ${props => props.theme.colors.primaryLight};
+    transform: translateY(-2px);
+  }
+
+  svg {
+    width: 64px;
+    height: 64px;
+    color: ${props => props.$isSelected ? props.theme.colors.primary : props.theme.colors.textSecondary};
+    transition: color 0.3s ease;
+  }
+
+  @media (max-width: 800px) {
+    max-width: 150px;
+  }
+`;
+
+const TypeLabel = styled.p`
+  font-size: 18px;
+  font-weight: 500;
+  color: ${props => props.theme.colors.text};
+  margin: 0;
+`;
+
+const InputContainer = styled.div`
+  margin-bottom: 24px;
+`;
+
+const InputLabel = styled.label`
+  font-size: 18px;
+  font-weight: 500;
+  color: ${props => props.theme.colors.text};
+  margin-bottom: 12px;
+  display: block;
+`;
+
+const TextArea = styled.textarea`
+  width: 100%;
+  height: 120px;
+  padding: 16px;
+  border: 2px solid ${props => props.theme.colors.surfaceBorder};
+  border-radius: 12px;
+  font-size: 16px;
+  font-family: inherit;
+  resize: none;
+  background: ${props => props.theme.colors.inputBackground};
+  color: ${props => props.theme.colors.text};
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+
+  &::placeholder {
+    color: ${props => props.theme.colors.textMuted};
+  }
+
+  &:focus {
+    outline: none;
+    border-color: ${props => props.theme.colors.primary};
+    box-shadow: 0 0 0 3px ${props => props.theme.colors.primaryLight};
+  }
+`;
+
+const ButtonContainer = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+
+  @media (max-width: 480px) {
+    flex-direction: column;
   }
 `;
 
 export default PreferencesPage;
-
-
-
-
-/*
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-
-export default function App() {
-  const [selectedButton, setSelectedButton] = useState(null);
-  const [textInput, setTextInput] = useState("");
-  const navigate = useNavigate();
-
-  const handleButtonClick = (button) => {
-    setSelectedButton(button);
-    // make the button stay selected?
-    // navigate('/dashboard')
-  };
-
-  const handleSubmit = async () => {
-    // console.log("Selected Button:", selectedButton);
-    // console.log("Text Input:", textInput);
-    const userText = `Learning Style: ${selectedButton}, User Preferences: ${textInput}`;
-      
-    try {
-      const response = await fetch("http://localhost:8000/capture_user_input", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ user_text: userText })
-      });
-      const data = await response.json();
-      console.log("Server response:", data);
-      navigate('/dashboard')
-    } catch (error) {
-      console.error("Error:", error);
-      navigate('/dashboard')
-    }
-  };
-
-  return (
-    <div className="flex flex-col items-center p-6 space-y-4">
-      <div className="flex space-x-4">
-        {["Visual", "Auditory", "Read/ Write", "Kinesthetic"].map((btn, index) => (
-          <button
-            key={index}
-            onClick={() => handleButtonClick(btn)}
-            className={`px-4 py-2 border rounded-lg ${selectedButton === btn ? "bg-blue-500 text-white" : "bg-gray-200"}`}
-          >
-            {btn}
-          </button>
-        ))}
-      </div>
-      <input
-        type="text"
-        placeholder="Prefered Learning Media"
-        value={textInput}
-        onChange={(e) => setTextInput(e.target.value)}
-        className="p-2 border rounded-lg w-64"
-      />
-      <button
-        onClick={handleSubmit}
-        className="px-4 py-2 bg-green-500 text-white rounded-lg"
-      >
-        Submit
-      </button>
-    </div>
-  );
-}
-*/

@@ -1,45 +1,77 @@
 "use client";
 import React, { useState } from "react";
 import InputField from "./InputField";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
 
 const LoginForm = () => {
-  
-  const[isHovered, setIsHovered] = useState(false);
-  const navigate = useNavigate();
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e) => {
+  const navigate = useNavigate();
+  const { login } = useAuth();
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    navigate('/preferences');
-    // Handle form submission
+    setError("");
+    setLoading(true);
+
+    try {
+      await login(username, password);
+      navigate('/preferences');
+    } catch (err) {
+      setError(err.message || "Login failed. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
-  // const handleSignup = (e) =>{   
-  //   e.preventDefault();
-  //   navigate('/signup');
-  // }
-  
 
   return (
     <form onSubmit={handleSubmit} className="login-form">
-      <InputField label="Username" />
-      <InputField label="Password" type="password" />
-      {/* <button type="button" className='text-button'
-        onMouseOver={()=>setIsHovered(true)} 
-        onMouseLeave={()=>setIsHovered(false)}
-        onClick={handleSignup}
-        style={{
-          textDecoration: isHovered ? "underline" : "none",
-          background: "none",
-          border: "none",
-          position: "relative",
-          top: "70px",
-          right: "200px",
-          cursor: "pointer",
-        }}
-        >Sign Up</button> */}
-      <button type="submit" className="sign-in-btn">
-        Sign In
-      </button>
+      {error && (
+        <div style={{
+          padding: "10px",
+          backgroundColor: "#ffe4e4",
+          border: "1px solid #ff6b6b",
+          borderRadius: "5px",
+          color: "#d63031",
+          fontSize: "14px",
+          fontFamily: '"Inria Sans", sans-serif',
+        }}>
+          {error}
+        </div>
+      )}
+      <InputField
+        label="Username"
+        value={username}
+        onChange={(e) => setUsername(e.target.value)}
+        required
+      />
+      <InputField
+        label="Password"
+        type="password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+        required
+      />
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "24px" }}>
+        <Link
+          to="/signup"
+          style={{
+            color: "#9c009f",
+            fontFamily: '"Inria Sans", sans-serif',
+            fontSize: "14px",
+            textDecoration: "none",
+          }}
+        >
+          Don't have an account? Sign up
+        </Link>
+        <button type="submit" className="sign-in-btn" disabled={loading}>
+          {loading ? "Signing in..." : "Sign In"}
+        </button>
+      </div>
       <style jsx>{`
         .login-form {
           display: flex;
@@ -47,8 +79,6 @@ const LoginForm = () => {
           gap: 20px;
         }
         .sign-in-btn {
-          align-self: flex-end;
-          margin-top: 24px;
           padding: 12px 24px;
           color: #fff;
           border: none;
@@ -57,15 +87,19 @@ const LoginForm = () => {
           font-size: 16px;
           cursor: pointer;
           background-color: #000;
+          transition: opacity 0.2s;
         }
-        .text-button{
-          color: inherit;
+        .sign-in-btn:disabled {
+          opacity: 0.6;
+          cursor: not-allowed;
         }
-        
+        .sign-in-btn:hover:not(:disabled) {
+          opacity: 0.8;
+        }
+
         @media (max-width: 640px) {
           .sign-in-btn {
             width: 100%;
-            margin-top: 16px;
           }
         }
       `}</style>
