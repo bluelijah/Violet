@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
+import os
 
 from routes.auth_routes import router as auth_router
 from routes.course_routes import router as course_router
@@ -23,14 +24,18 @@ backendApp = FastAPI(
     lifespan=lifespan
 )
 
-# CORS middleware
+# CORS middleware - allow frontend origins
+cors_origins = [
+    "http://localhost:3000",
+    "http://localhost:5173",
+]
+# Add production frontend URL from environment variable
+if os.getenv("FRONTEND_URL"):
+    cors_origins.append(os.getenv("FRONTEND_URL"))
+
 backendApp.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://localhost:3000",
-        "http://localhost:5173",
-        "https://comfortable-encouragement-production-032a.up.railway.app"
-    ],
+    allow_origins=cors_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
