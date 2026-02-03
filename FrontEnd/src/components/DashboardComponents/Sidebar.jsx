@@ -1,4 +1,5 @@
 "use client";
+import { useState } from "react";
 import styled from "styled-components";
 import { useDashboard } from "./DashboardContext";
 import { useAuth } from "../../contexts/AuthContext";
@@ -8,7 +9,8 @@ import { Button, ThemeToggle } from "../ui";
 export function Sidebar() {
   const navigate = useNavigate();
   const { logout, user } = useAuth();
-  const { courses, selectedCourse, selectCourse, loading } = useDashboard();
+  const { courses, selectedCourse, selectCourse, deleteCourse, loading } = useDashboard();
+  const [courseToDelete, setCourseToDelete] = useState(null);
 
   const handleRouting = () => {
     navigate('/newCoursePage');
@@ -21,6 +23,22 @@ export function Sidebar() {
 
   const handleCourseClick = (course) => {
     selectCourse(course.id);
+  };
+
+  const handleDeleteClick = (e, course) => {
+    e.stopPropagation();
+    setCourseToDelete(course);
+  };
+
+  const confirmDelete = async () => {
+    if (courseToDelete) {
+      await deleteCourse(courseToDelete.id);
+      setCourseToDelete(null);
+    }
+  };
+
+  const cancelDelete = () => {
+    setCourseToDelete(null);
   };
 
   return (
@@ -71,6 +89,14 @@ export function Sidebar() {
                   </svg>
                 </CourseIcon>
                 <CourseTitle>{course.title}</CourseTitle>
+                <DeleteButton
+                  onClick={(e) => handleDeleteClick(e, course)}
+                  aria-label="Delete course"
+                >
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M3 6h18M8 6V4a2 2 0 012-2h4a2 2 0 012 2v2m3 0v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6h14z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </DeleteButton>
               </CourseItem>
             ))
           )}
@@ -81,11 +107,39 @@ export function Sidebar() {
         <UserInfo>
           <UserAvatar>{user?.username?.charAt(0).toUpperCase()}</UserAvatar>
           <UserName>{user?.username}</UserName>
+          <SettingsButton
+            onClick={() => navigate('/preferences')}
+            aria-label="Edit preferences"
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 15a3 3 0 100-6 3 3 0 000 6z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-2 2 2 2 0 01-2-2v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83 0 2 2 0 010-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 01-2-2 2 2 0 012-2h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 010-2.83 2 2 0 012.83 0l.06.06a1.65 1.65 0 001.82.33H9a1.65 1.65 0 001-1.51V3a2 2 0 012-2 2 2 0 012 2v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 0 2 2 0 010 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9a1.65 1.65 0 001.51 1H21a2 2 0 012 2 2 2 0 01-2 2h-.09a1.65 1.65 0 00-1.51 1z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </SettingsButton>
         </UserInfo>
         <Button variant="ghost" onClick={handleLogout} style={{ width: '100%' }}>
           Sign Out
         </Button>
       </SidebarFooter>
+
+      {courseToDelete && (
+        <ModalOverlay onClick={cancelDelete}>
+          <ModalContent onClick={(e) => e.stopPropagation()}>
+            <ModalTitle>Delete Course</ModalTitle>
+            <ModalText>
+              Are you sure you want to delete "{courseToDelete.title}"? This action cannot be undone.
+            </ModalText>
+            <ModalButtons>
+              <Button variant="ghost" onClick={cancelDelete}>
+                Cancel
+              </Button>
+              <DeleteConfirmButton onClick={confirmDelete}>
+                Delete
+              </DeleteConfirmButton>
+            </ModalButtons>
+          </ModalContent>
+        </ModalOverlay>
+      )}
     </SidebarContainer>
   );
 }
@@ -269,4 +323,108 @@ const UserName = styled.span`
   font-size: 14px;
   font-weight: 500;
   color: ${props => props.theme.colors.text};
+`;
+
+const SettingsButton = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  border-radius: 8px;
+  border: none;
+  background: transparent;
+  color: ${props => props.theme.colors.textSecondary};
+  cursor: pointer;
+  margin-left: auto;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: ${props => props.theme.name === 'dark' ? 'rgba(139, 166, 250, 0.12)' : props.theme.colors.primaryLight};
+    color: ${props => props.theme.name === 'dark' ? '#A78BFA' : props.theme.colors.primary};
+  }
+`;
+
+const DeleteButton = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px;
+  border-radius: 6px;
+  border: none;
+  background: transparent;
+  color: ${props => props.theme.colors.textMuted};
+  cursor: pointer;
+  opacity: 0;
+  transition: all 0.2s ease;
+  margin-left: auto;
+  flex-shrink: 0;
+
+  ${CourseItem}:hover & {
+    opacity: 1;
+  }
+
+  &:hover {
+    background: ${props => props.theme.name === 'dark' ? 'rgba(239, 68, 68, 0.2)' : 'rgba(239, 68, 68, 0.1)'};
+    color: #ef4444;
+  }
+`;
+
+const ModalOverlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  backdrop-filter: blur(4px);
+`;
+
+const ModalContent = styled.div`
+  background: ${props => props.theme.name === 'dark' ? '#1E1E28' : props.theme.colors.surface};
+  border-radius: 16px;
+  padding: 24px;
+  max-width: 400px;
+  width: 90%;
+  border: 1px solid ${props => props.theme.name === 'dark' ? 'rgba(139, 166, 250, 0.15)' : props.theme.colors.surfaceBorder};
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+`;
+
+const ModalTitle = styled.h3`
+  margin: 0 0 12px 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: ${props => props.theme.colors.text};
+`;
+
+const ModalText = styled.p`
+  margin: 0 0 24px 0;
+  font-size: 14px;
+  color: ${props => props.theme.colors.textSecondary};
+  line-height: 1.5;
+`;
+
+const ModalButtons = styled.div`
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+`;
+
+const DeleteConfirmButton = styled.button`
+  padding: 10px 20px;
+  border-radius: 10px;
+  border: none;
+  background: #ef4444;
+  color: white;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: #dc2626;
+  }
 `;

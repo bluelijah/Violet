@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
@@ -15,6 +15,8 @@ const PreferencesPage = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
   const { updatePreferences, user } = useAuth();
+
+  const isEditing = !!user?.preferences;
 
   const learningTypes = [
     {
@@ -51,6 +53,40 @@ const PreferencesPage = () => {
     "Case studies", "Real-world applications", "Proofs", "Mnemonics",
     "Historical context", "Video explanations"
   ];
+
+  // Pre-fill form when editing existing preferences
+  useEffect(() => {
+    if (user?.preferences) {
+      const prefs = user.preferences;
+
+      // Set learning style
+      if (prefs.learning_style) {
+        setSelectedType(prefs.learning_style);
+      }
+
+      // Parse preferences_text to extract tags and description
+      if (prefs.preferences_text) {
+        const text = prefs.preferences_text;
+
+        // Check for "I like: tag1, tag2. " pattern
+        const tagsMatch = text.match(/^I like: ([^.]+)\.\s*/);
+        if (tagsMatch) {
+          const tagsString = tagsMatch[1];
+          const parsedTags = tagsString.split(", ").filter(tag =>
+            learningTags.includes(tag)
+          );
+          setSelectedTags(parsedTags);
+
+          // Everything after the tags is the description
+          const remainingText = text.slice(tagsMatch[0].length);
+          setDescription(remainingText);
+        } else {
+          // No tags found, entire text is description
+          setDescription(text);
+        }
+      }
+    }
+  }, [user?.preferences]);
 
   const toggleTag = (tag) => {
     setSelectedTags(prev =>
@@ -94,9 +130,9 @@ const PreferencesPage = () => {
       </ThemeToggleWrapper>
 
       <PreferencesCard>
-        <WelcomeText>Welcome, {user?.username}!</WelcomeText>
-        <Title>Learning Preferences</Title>
-        <Subtitle>Tell us how you learn best so we can personalize your courses.</Subtitle>
+        <WelcomeText>{isEditing ? `Hi, ${user?.username}!` : `Welcome, ${user?.username}!`}</WelcomeText>
+        <Title>{isEditing ? "Edit Preferences" : "Learning Preferences"}</Title>
+        <Subtitle>{isEditing ? "Update your learning preferences to improve course personalization." : "Tell us how you learn best so we can personalize your courses."}</Subtitle>
 
         {error && <ErrorMessage>{error}</ErrorMessage>}
 
@@ -173,10 +209,10 @@ const PreferencesPage = () => {
 
         <ButtonContainer>
           <Button variant="secondary" onClick={() => navigate("/dashboard")} disabled={loading}>
-            Skip for now
+            {isEditing ? "Cancel" : "Skip for now"}
           </Button>
           <Button onClick={handleContinue} disabled={loading}>
-            {loading ? "Saving..." : "Continue"}
+            {loading ? "Saving..." : isEditing ? "Save Changes" : "Continue"}
           </Button>
         </ButtonContainer>
       </PreferencesCard>
