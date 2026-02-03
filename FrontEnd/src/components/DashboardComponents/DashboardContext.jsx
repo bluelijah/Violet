@@ -4,7 +4,7 @@ import { useAuth } from "../../contexts/AuthContext";
 
 const DashboardContext = createContext();
 
-const API_URL = 'http://localhost:8000';
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
 
 export function DashboardProvider({ children }) {
   const { token } = useAuth();
