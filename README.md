@@ -1,6 +1,6 @@
 # VIOLET - AI-Powered Personalized Learning Platform
 
-VIOLET is an intelligent course generation platform that creates personalized learning paths based on your learning style and preferences. Powered by Google's Gemini AI, it generates comprehensive courses tailored to how you learn best.
+VIOLET is an intelligent course generation platform that creates personalized learning paths based on your learning style and preferences. Powered by Google's Gemini AI, it generates comprehensive courses tailored to how you learn best. 
 
 ## Features
 
