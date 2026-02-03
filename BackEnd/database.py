@@ -3,14 +3,22 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 import os
 
-# Create database directory if it doesn't exist
-db_dir = os.path.dirname(os.path.abspath(__file__))
-DATABASE_URL = f"sqlite:///{os.path.join(db_dir, 'violet.db')}"
+# Use DATABASE_URL from environment (Railway provides this), fallback to SQLite for local dev
+DATABASE_URL = os.getenv("DATABASE_URL")
 
-engine = create_engine(
-    DATABASE_URL,
-    connect_args={"check_same_thread": False}  # Needed for SQLite
-)
+if DATABASE_URL:
+    # Railway/Heroku sometimes use postgres:// but SQLAlchemy needs postgresql://
+    if DATABASE_URL.startswith("postgres://"):
+        DATABASE_URL = DATABASE_URL.replace("postgres://", "postgresql://", 1)
+    engine = create_engine(DATABASE_URL, pool_pre_ping=True)
+else:
+    # Local development fallback to SQLite
+    db_dir = os.path.dirname(os.path.abspath(__file__))
+    DATABASE_URL = f"sqlite:///{os.path.join(db_dir, 'violet.db')}"
+    engine = create_engine(
+        DATABASE_URL,
+        connect_args={"check_same_thread": False}  # Needed for SQLite
+    )
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
