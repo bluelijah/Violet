@@ -21,44 +21,96 @@ export function MainContent() {
   }, [selectedCourse]);
 
   function parseContent(text) {
-    const lines = text.split("\n");
-    let currentSection = null;
-    let extractedData = { prerequisites: [], courseContent: [], resources: [] };
+    // Use regex to extract sections more reliably
+    let prerequisites = "";
+    let courseContent = "";
+    let resources = "";
 
-    for (let line of lines) {
-      let trimmedLine = line.trim();
+    // Extract PREREQUISITES section (ends at DEPENDENCY MAP or COURSE STRUCTURE)
+    const prereqMatch = text.match(/PREREQUISITES:\s*([\s\S]*?)(?=DEPENDENCY MAP:|COURSE STRUCTURE:|RESOURCES:|$)/i);
+    if (prereqMatch) {
+      prerequisites = prereqMatch[1].trim();
+    }
 
-      if (trimmedLine === "## Prerequisites") {
-        currentSection = "prerequisites";
-        continue;
-      }
-      if (trimmedLine === "## Course Content") {
-        currentSection = "courseContent";
-        continue;
-      }
-      if (trimmedLine === "## Resources") {
-        currentSection = "resources";
-        continue;
-      }
-
-      if (currentSection) {
-        extractedData[currentSection].push(line);
+    // Extract COURSE STRUCTURE section (includes CORE PATH, ends at ENRICHMENT or RESOURCES)
+    const courseMatch = text.match(/(?:COURSE STRUCTURE:|CORE PATH:)\s*([\s\S]*?)(?=ENRICHMENT BRANCHES:|RESOURCES:|$)/i);
+    if (courseMatch) {
+      courseContent = courseMatch[1].trim();
+      // Also try to include enrichment if it exists before resources
+      const enrichMatch = text.match(/ENRICHMENT BRANCHES:\s*([\s\S]*?)(?=RESOURCES:|$)/i);
+      if (enrichMatch) {
+        courseContent += "\n\n**Enrichment (Optional):**\n" + enrichMatch[1].trim();
       }
     }
 
+    // Extract RESOURCES section (goes to end or next major section)
+    const resourceMatch = text.match(/RESOURCES:\s*([\s\S]*?)(?=ASSESSMENT|TIME & EFFORT|MASTERY|NEXT STEPS|DIFFICULTY|$)/i);
+    if (resourceMatch) {
+      resources = resourceMatch[1].trim();
+    }
+
     const formatContent = (content) => {
-      return content
-        .join("\n")
-        .trim()
-        .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
-        .replace(/\*(.*?)\*/g, "<em>$1</em>")
-        .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>')
-        .replace(/\n/g, "<br />");
+      if (!content) return "";
+      let text = content;
+
+      // Convert Module headers (e.g., "Module 1: Title")
+      text = text.replace(/^(Module \d+[^:\n]*:[^\n]*)/gm, '<div class="module-header">$1</div>');
+
+      // Convert tree structure characters to cleaner format
+      text = text.replace(/├─\s*/g, '• ');
+      text = text.replace(/└─\s*/g, '• ');
+      text = text.replace(/\*\s+\*\*/g, '• **');
+
+      // Convert "Unit X.X:" patterns
+      text = text.replace(/^(\s*)•\s*(Unit \d+\.\d+[^→]*)/gm, '$1<div class="unit-header">$2</div>');
+
+      // Convert → explanations to styled spans
+      text = text.replace(/→\s*\*\*Why here:\*\*\s*/g, '<span class="why-label">→ </span>');
+      text = text.replace(/→\s*/g, '<span class="arrow">→</span> ');
+
+      // Convert **bold** text
+      text = text.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+
+      // Convert *italic* text (but not bullet points)
+      text = text.replace(/(?<!\*)\*([^*\n]+)\*(?!\*)/g, '<em>$1</em>');
+
+      // Convert markdown links
+      text = text.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>');
+
+      // Convert "Required" and "Recommended" headers
+      text = text.replace(/^(Required|Recommended)\s*$/gm, '<div class="subsection-header">$1</div>');
+
+      // Convert bullet points
+      text = text.replace(/^[-•]\s+(.+)$/gm, '<div class="list-item">$1</div>');
+      text = text.replace(/^\*\s+(.+)$/gm, '<div class="list-item">$1</div>');
+
+      // Convert "Checkpoint:" lines
+      text = text.replace(/^(Checkpoint:[^\n]*)/gm, '<div class="checkpoint">$1</div>');
+      text = text.replace(/<div class="list-item">(Checkpoint:[^<]*)<\/div>/g, '<div class="checkpoint">$1</div>');
+
+      // Convert "Primary:" and "Alternative:" resource labels
+      text = text.replace(/^[-•]\s*<strong>(Primary|Alternative):<\/strong>/gm, '<div class="resource-type">$1</div>');
+
+      // Convert inline code
+      text = text.replace(/`([^`]+)`/g, '<code class="inline-code">$1</code>');
+
+      // Convert newlines to breaks
+      text = text.replace(/\n\n+/g, '</p><p class="paragraph">');
+      text = text.replace(/\n/g, '<br />');
+
+      // Wrap in paragraph
+      text = '<p class="paragraph">' + text + '</p>';
+
+      // Clean up empty paragraphs
+      text = text.replace(/<p class="paragraph">\s*<\/p>/g, '');
+      text = text.replace(/<p class="paragraph">\s*<br \/>\s*<\/p>/g, '');
+
+      return text;
     };
 
-    setPrerequisites(formatContent(extractedData.prerequisites) || "No prerequisites found.");
-    setCourseContent(formatContent(extractedData.courseContent) || "No content found.");
-    setResources(formatContent(extractedData.resources) || "No resources found.");
+    setPrerequisites(formatContent(prerequisites) || "No prerequisites found.");
+    setCourseContent(formatContent(courseContent) || "No content found.");
+    setResources(formatContent(resources) || "No resources found.");
   }
 
   if (loading) {
@@ -110,14 +162,21 @@ export function MainContent() {
         </CourseHeader>
 
         <AccordionList>
+          <LearningSpine />
           {steps.map((step, index) => (
-            <StepAccordion
-              key={index + 1}
-              stepNumber={index + 1}
-              title={step.title}
-              content={step.content}
-              icon={step.icon}
-            />
+            <StepItem key={index + 1}>
+              <StepIndicator>
+                <StepNumber>{index + 1}</StepNumber>
+              </StepIndicator>
+              <StepContent>
+                <StepAccordion
+                  stepNumber={index + 1}
+                  title={step.title}
+                  content={step.content}
+                  icon={step.icon}
+                />
+              </StepContent>
+            </StepItem>
           ))}
         </AccordionList>
       </ContentWrapper>
@@ -127,7 +186,9 @@ export function MainContent() {
 
 const MainContainer = styled.main`
   flex: 1;
-  background: ${props => props.theme.colors.background};
+  background: ${props => props.theme.name === 'dark'
+    ? `radial-gradient(ellipse 80% 50% at 50% 0%, rgba(139, 166, 250, 0.1) 0%, transparent 60%), #18181F`
+    : props.theme.colors.background};
   min-height: 100vh;
   transition: background-color 0.3s ease;
 `;
@@ -206,7 +267,12 @@ const CourseHeader = styled.div`
 const CourseTitle = styled.h1`
   font-size: 36px;
   font-weight: 700;
-  color: ${props => props.theme.colors.text};
+  background: ${props => props.theme.name === 'dark'
+    ? 'linear-gradient(135deg, #8BA6FA 0%, #A78BFA 50%, #DE8BFA 100%)'
+    : `linear-gradient(135deg, ${props.theme.colors.primary} 0%, ${props.theme.colors.accent} 100%)`};
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
   margin-bottom: 8px;
   line-height: 1.2;
 
@@ -223,5 +289,77 @@ const CourseMeta = styled.p`
 const AccordionList = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 24px;
+  position: relative;
+  padding-left: 60px;
+
+  @media (max-width: 640px) {
+    padding-left: 48px;
+    gap: 20px;
+  }
+`;
+
+const LearningSpine = styled.div`
+  position: absolute;
+  left: 20px;
+  top: 24px;
+  bottom: 24px;
+  width: ${props => props.theme.name === 'dark' ? '2px' : '3px'};
+  background: ${props => props.theme.name === 'dark'
+    ? 'linear-gradient(180deg, #8BA6FA 0%, #A78BFA 50%, #DE8BFA 100%)'
+    : `linear-gradient(180deg, ${props.theme.colors.primary} 0%, ${props.theme.colors.accent} 100%)`};
+  border-radius: 2px;
+  opacity: ${props => props.theme.name === 'dark' ? '0.5' : '0.6'};
+
+  @media (max-width: 640px) {
+    left: 16px;
+    width: 2px;
+  }
+`;
+
+const StepItem = styled.div`
+  display: flex;
+  align-items: flex-start;
+  position: relative;
+`;
+
+const StepIndicator = styled.div`
+  position: absolute;
+  left: -60px;
+  top: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  @media (max-width: 640px) {
+    left: -48px;
+  }
+`;
+
+const StepNumber = styled.div`
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: ${props => props.theme.name === 'dark'
+    ? 'linear-gradient(135deg, #2A2A35 0%, #252530 100%)'
+    : `linear-gradient(135deg, ${props.theme.colors.primary} 0%, ${props.theme.colors.accent} 100%)`};
+  border: ${props => props.theme.name === 'dark' ? '2px solid #8BA6FA' : 'none'};
+  color: ${props => props.theme.name === 'dark' ? '#A78BFA' : 'white'};
+  font-size: 16px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: ${props => props.theme.name === 'dark' ? '0 4px 12px rgba(139, 166, 250, 0.2)' : `0 4px 12px ${props.theme.colors.primary}40`};
+  z-index: 1;
+
+  @media (max-width: 640px) {
+    width: 32px;
+    height: 32px;
+    font-size: 14px;
+  }
+`;
+
+const StepContent = styled.div`
+  flex: 1;
 `;

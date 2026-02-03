@@ -93,8 +93,8 @@ export function Sidebar() {
 const SidebarContainer = styled.aside`
   width: 300px;
   min-height: 100vh;
-  background: ${props => props.theme.colors.surface};
-  border-right: 1px solid ${props => props.theme.colors.surfaceBorder};
+  background: ${props => props.theme.name === 'dark' ? '#1E1E28' : props.theme.colors.surface};
+  border-right: 1px solid ${props => props.theme.name === 'dark' ? 'rgba(139, 166, 250, 0.15)' : props.theme.colors.surfaceBorder};
   display: flex;
   flex-direction: column;
   transition: background-color 0.3s ease;
@@ -103,7 +103,7 @@ const SidebarContainer = styled.aside`
     width: 100%;
     min-height: auto;
     border-right: none;
-    border-bottom: 1px solid ${props => props.theme.colors.surfaceBorder};
+    border-bottom: 1px solid ${props => props.theme.name === 'dark' ? 'rgba(139, 166, 250, 0.15)' : props.theme.colors.surfaceBorder};
   }
 `;
 
@@ -145,22 +145,28 @@ const SectionTitle = styled.div`
 `;
 
 const AddButton = styled.button`
-  width: 32px;
-  height: 32px;
-  border-radius: 8px;
-  border: none;
-  background: ${props => props.theme.colors.primaryLight};
-  color: ${props => props.theme.colors.primary};
-  cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 6px;
+  border-radius: 14px;
+  border: 1px solid ${props => props.theme.name === 'dark' ? 'rgba(139, 166, 250, 0.2)' : props.theme.colors.surfaceBorder};
+  background: ${props => props.theme.name === 'dark' ? 'rgba(139, 166, 250, 0.12)' : props.theme.colors.primaryLight};
+  color: ${props => props.theme.name === 'dark' ? '#8BA6FA' : props.theme.colors.primary};
+  cursor: pointer;
   transition: all 0.2s ease;
 
   &:hover {
-    background: ${props => props.theme.colors.primary};
-    color: white;
+    background: ${props => props.theme.name === 'dark' ? 'rgba(167, 139, 250, 0.2)' : props.theme.colors.primary};
+    border-color: ${props => props.theme.name === 'dark' ? '#A78BFA' : props.theme.colors.primary};
+    color: ${props => props.theme.name === 'dark' ? '#A78BFA' : 'white'};
     transform: scale(1.05);
+  }
+
+  svg {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
   }
 `;
 
@@ -199,12 +205,19 @@ const CourseItem = styled.div`
   border-radius: 10px;
   cursor: pointer;
   transition: all 0.2s ease;
-  background: ${props => props.$isSelected ? props.theme.colors.primaryLight : 'transparent'};
-  color: ${props => props.$isSelected ? props.theme.colors.primary : props.theme.colors.text};
+  background: ${props => props.$isSelected
+    ? (props.theme.name === 'dark' ? 'rgba(139, 166, 250, 0.12)' : props.theme.colors.primaryLight)
+    : 'transparent'};
+  color: ${props => props.$isSelected
+    ? (props.theme.name === 'dark' ? '#A78BFA' : props.theme.colors.primary)
+    : props.theme.colors.text};
+  border-left: ${props => props.$isSelected
+    ? (props.theme.name === 'dark' ? '2px solid #8BA6FA' : '2px solid ' + props.theme.colors.primary)
+    : '2px solid transparent'};
   margin-bottom: 4px;
 
   &:hover {
-    background: ${props => props.$isSelected ? props.theme.colors.primaryLight : props.theme.colors.backgroundSecondary};
+    background: ${props => props.theme.name === 'dark' ? 'rgba(139, 166, 250, 0.08)' : props.theme.colors.backgroundSecondary};
   }
 `;
 
@@ -212,7 +225,7 @@ const CourseIcon = styled.div`
   width: 32px;
   height: 32px;
   border-radius: 8px;
-  background: ${props => props.theme.colors.backgroundSecondary};
+  background: ${props => props.theme.name === 'dark' ? 'rgba(139, 166, 250, 0.1)' : props.theme.colors.backgroundSecondary};
   display: flex;
   align-items: center;
   justify-content: center;

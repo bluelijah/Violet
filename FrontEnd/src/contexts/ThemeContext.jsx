@@ -55,7 +55,7 @@ export const themes = {
       // Primary violet palette
       primary: '#A78BFA',
       primaryHover: '#8B5CF6',
-      primaryLight: '#C4B5FD',
+      primaryLight: '#2D2250',
       primaryDark: '#7C3AED',
 
       // Accent
@@ -63,20 +63,20 @@ export const themes = {
       accentHover: '#EC4899',
 
       // Backgrounds
-      background: '#0F0A1A',
-      backgroundSecondary: '#1A1425',
-      backgroundTertiary: '#251D33',
+      background: '#1A1425',
+      backgroundSecondary: '#241B35',
+      backgroundTertiary: '#2E2345',
 
       // Surfaces (cards, inputs)
-      surface: '#1A1425',
-      surfaceHover: '#251D33',
+      surface: '#241B35',
+      surfaceHover: '#2E2345',
       surfaceBorder: '#3D2E5C',
 
       // Text
       text: '#F9FAFB',
       textSecondary: '#D1D5DB',
       textMuted: '#9CA3AF',
-      textOnPrimary: '#0F0A1A',
+      textOnPrimary: '#1A1425',
 
       // States
       success: '#34D399',

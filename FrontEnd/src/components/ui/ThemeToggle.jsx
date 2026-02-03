@@ -6,9 +6,8 @@ const ToggleButton = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 44px;
-  height: 44px;
-  border-radius: 12px;
+  padding: 6px;
+  border-radius: 14px;
   border: 2px solid ${props => props.theme.colors.surfaceBorder};
   background: ${props => props.theme.colors.surface};
   color: ${props => props.theme.colors.text};
@@ -24,6 +23,7 @@ const ToggleButton = styled.button`
   svg {
     width: 20px;
     height: 20px;
+    flex-shrink: 0;
   }
 `;
 

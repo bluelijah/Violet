@@ -53,29 +53,35 @@ const FlowerContainer = styled.div`
   pointer-events: none;
 `;
 
-const FlowerStem = styled.div`
+const FlowerWrapper = styled.div`
   position: absolute;
   bottom: 0;
   left: 50%;
   transform: translateX(-50%);
-  width: 4px;
   height: 100%;
-  background: linear-gradient(to top, #228B22, #32CD32);
-  border-radius: 2px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   animation: ${sway} ${props => props.$swayDuration || '4s'} ease-in-out infinite;
   transform-origin: bottom center;
 `;
 
 const FlowerHead = styled.div`
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
+  flex-shrink: 0;
+`;
+
+const FlowerStem = styled.div`
+  width: 4px;
+  flex-grow: 1;
+  background: linear-gradient(to top, #228B22, #32CD32);
+  border-radius: 2px;
+  margin-top: -26px;
+  z-index: -1;
 `;
 
 const VioletFlower = ({ left, height, delay, swayDuration }) => (
   <FlowerContainer $left={left} $height={height} $delay={delay}>
-    <FlowerStem $swayDuration={swayDuration}>
+    <FlowerWrapper $swayDuration={swayDuration}>
       <FlowerHead>
         <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
           {/* Petals */}
@@ -89,7 +95,8 @@ const VioletFlower = ({ left, height, delay, swayDuration }) => (
           <circle cx="24" cy="24" r="3" fill="#F59E0B"/>
         </svg>
       </FlowerHead>
-    </FlowerStem>
+      <FlowerStem />
+    </FlowerWrapper>
   </FlowerContainer>
 );
 
@@ -105,6 +112,11 @@ const LoginCard = styled(Card)`
   animation: fadeIn 0.5s ease;
   position: relative;
   z-index: 1;
+
+  @media (max-width: 480px) {
+    max-width: 320px;
+    padding: 24px 20px;
+  }
 `;
 
 const Logo = styled.h1`
@@ -115,18 +127,31 @@ const Logo = styled.h1`
   -webkit-text-fill-color: transparent;
   background-clip: text;
   margin-bottom: 8px;
+
+  @media (max-width: 480px) {
+    font-size: 32px;
+  }
 `;
 
 const Subtitle = styled.p`
   color: ${props => props.theme.colors.textSecondary};
   font-size: 16px;
   margin-bottom: 32px;
+
+  @media (max-width: 480px) {
+    font-size: 14px;
+    margin-bottom: 24px;
+  }
 `;
 
 const Form = styled.form`
   display: flex;
   flex-direction: column;
   gap: 20px;
+
+  @media (max-width: 480px) {
+    gap: 16px;
+  }
 `;
 
 const ErrorMessage = styled.div`
@@ -146,7 +171,8 @@ const Footer = styled.div`
 
   @media (max-width: 480px) {
     flex-direction: column;
-    gap: 16px;
+    gap: 12px;
+    margin-top: 16px;
   }
 `;
 

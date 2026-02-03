@@ -57,7 +57,7 @@ VIOLET is an intelligent course generation platform that creates personalized le
 
 4. **Set up the frontend**
    ```bash
-   cd ../FrontEnd
+   cd FrontEnd
    npm install
    ```
 
