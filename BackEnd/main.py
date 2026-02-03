@@ -4,7 +4,8 @@ from contextlib import asynccontextmanager
 
 from routes.auth_routes import router as auth_router
 from routes.course_routes import router as course_router
-from database import init_db
+from database import init_db, engine
+from sqlalchemy import text
 
 
 @asynccontextmanager
@@ -39,3 +40,15 @@ backendApp.include_router(course_router)
 @backendApp.get("/")
 async def root():
     return {"message": "VIOLET API", "docs": "/docs"}
+
+
+@backendApp.get("/test-db")
+def test_db():
+    """Test database connection"""
+    try:
+        with engine.connect() as conn:
+            result = conn.execute(text("SELECT 1"))
+            result.fetchone()
+        return {"status": "success", "database": "connected"}
+    except Exception as e:
+        return {"status": "error", "error": str(e)}
