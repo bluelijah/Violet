@@ -28,10 +28,14 @@ backendApp = FastAPI(
 cors_origins = [
     "http://localhost:3000",
     "http://localhost:5173",
+    "https://syllabud.app",
 ]
 # Add production frontend URL from environment variable
-if os.getenv("FRONTEND_URL"):
-    cors_origins.append(os.getenv("FRONTEND_URL"))
+frontend_url = os.getenv("FRONTEND_URL")
+if frontend_url and frontend_url not in cors_origins:
+    cors_origins.append(frontend_url)
+
+print(f"CORS allowed origins: {cors_origins}")
 
 backendApp.add_middleware(
     CORSMiddleware,
