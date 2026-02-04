@@ -126,13 +126,17 @@ const LogoContainer = styled.div`
   margin-bottom: 8px;
 `;
 
-const FlowerIcon = styled.span`
-  font-size: 36px;
-
-  @media (max-width: 480px) {
-    font-size: 28px;
-  }
-`;
+const FlowerIcon = ({ size = 36 }) => (
+  <svg width={size} height={size} viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <ellipse cx="24" cy="10" rx="6" ry="10" fill="#8B5CF6" opacity="0.9"/>
+    <ellipse cx="14" cy="18" rx="6" ry="10" fill="#7C3AED" opacity="0.85" transform="rotate(-45 14 18)"/>
+    <ellipse cx="34" cy="18" rx="6" ry="10" fill="#7C3AED" opacity="0.85" transform="rotate(45 34 18)"/>
+    <ellipse cx="14" cy="30" rx="6" ry="10" fill="#6D28D9" opacity="0.8" transform="rotate(-90 14 30)"/>
+    <ellipse cx="34" cy="30" rx="6" ry="10" fill="#6D28D9" opacity="0.8" transform="rotate(90 34 30)"/>
+    <circle cx="24" cy="24" r="7" fill="#FCD34D"/>
+    <circle cx="24" cy="24" r="4" fill="#F59E0B"/>
+  </svg>
+);
 
 const Logo = styled.h1`
   font-size: 42px;
@@ -259,7 +263,7 @@ function LoginPage() {
 
       <LoginCard>
         <LogoContainer>
-          <FlowerIcon>🌸</FlowerIcon>
+          <FlowerIcon size={36} />
           <Logo>Syllabud</Logo>
         </LogoContainer>
         <Subtitle>Your Personalized Course Creator - Learn What Matters</Subtitle>
