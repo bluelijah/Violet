@@ -155,10 +155,22 @@ const Logo = styled.h1`
 const Subtitle = styled.p`
   color: ${props => props.theme.colors.textSecondary};
   font-size: 16px;
-  margin-bottom: 32px;
+  margin-bottom: 4px;
 
   @media (max-width: 480px) {
     font-size: 14px;
+  }
+`;
+
+const Tagline = styled.p`
+  color: ${props => props.theme.colors.primary};
+  font-size: 14px;
+  font-weight: 500;
+  font-style: italic;
+  margin-bottom: 32px;
+
+  @media (max-width: 480px) {
+    font-size: 12px;
     margin-bottom: 24px;
   }
 `;
@@ -266,7 +278,8 @@ function LoginPage() {
           <FlowerIcon size={36} />
           <Logo>Syllabud</Logo>
         </LogoContainer>
-        <Subtitle>Your Personalized Course Creator - Learn What Matters</Subtitle>
+        <Subtitle>Your Personalized Course Creator</Subtitle>
+        <Tagline>Learn What Matters</Tagline>
 
         <Form onSubmit={handleSubmit}>
           {error && <ErrorMessage>{error}</ErrorMessage>}

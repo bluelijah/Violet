@@ -80,6 +80,14 @@ const LoginCard = () => {
       fontFamily: '"Inria Sans", sans-serif',
       fontSize: "16px",
       color: "#000",
+      marginBottom: "4px",
+    },
+    tagline: {
+      fontFamily: '"Inria Sans", sans-serif',
+      fontSize: "14px",
+      color: "#7C3AED",
+      fontStyle: "italic",
+      fontWeight: "500",
       marginBottom: "60px",
     },
   };
@@ -87,7 +95,8 @@ const LoginCard = () => {
   return (
     <main style={styles.loginCard}>
       <h1 style={styles.title}>Syllabud</h1>
-      <p style={styles.subtitle}>Your Personalized Course Creator - Learn What Matters</p>
+      <p style={styles.subtitle}>Your Personalized Course Creator</p>
+      <p style={styles.tagline}>Learn What Matters</p>
       <LoginForm />
     </main>
   );
