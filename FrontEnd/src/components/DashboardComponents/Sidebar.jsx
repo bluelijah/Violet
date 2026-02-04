@@ -45,7 +45,10 @@ export function Sidebar() {
     <SidebarContainer>
       <SidebarHeader>
         <TitleRow>
-          <Logo>VIOLET</Logo>
+          <LogoContainer>
+            <FlowerIcon>🌸</FlowerIcon>
+            <Logo>Syllabud</Logo>
+          </LogoContainer>
           <ThemeToggle />
         </TitleRow>
 
@@ -174,6 +177,16 @@ const TitleRow = styled.div`
   justify-content: space-between;
   align-items: center;
   margin-bottom: 32px;
+`;
+
+const LogoContainer = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+`;
+
+const FlowerIcon = styled.span`
+  font-size: 24px;
 `;
 
 const Logo = styled.h1`

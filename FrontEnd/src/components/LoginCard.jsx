@@ -5,8 +5,8 @@ import LoginForm from "./LoginForm.jsx";
 const LoginCard = () => {
   return (
     <main className="login-card">
-      <h1 className="title">Violet</h1>
-      <p className="subtitle">A place to learn anything</p>
+      <h1 className="title">Syllabud</h1>
+      <p className="subtitle">Your Personalized Course Creator - Learn What Matters</p>
       <LoginForm />
       <style jsx>{`
         .login-card {
@@ -86,8 +86,8 @@ const LoginCard = () => {
 
   return (
     <main style={styles.loginCard}>
-      <h1 style={styles.title}>Violet</h1>
-      <p style={styles.subtitle}>A place to learn anything</p>
+      <h1 style={styles.title}>Syllabud</h1>
+      <p style={styles.subtitle}>Your Personalized Course Creator - Learn What Matters</p>
       <LoginForm />
     </main>
   );

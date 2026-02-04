@@ -1,6 +1,6 @@
-# VIOLET - AI-Powered Personalized Learning Platform
+# Syllabud - Your Personalized Course Creator
 
-VIOLET is an intelligent course generation platform that creates personalized learning paths based on your learning style and preferences. Powered by Google's Gemini AI, it generates comprehensive courses tailored to how you learn best. 
+Syllabud is an intelligent course generation platform that creates personalized learning paths based on your learning style and preferences. Powered by Google's Gemini AI, it generates comprehensive courses tailored to how you learn best. Learn What Matters.
 
 ## Features
 
@@ -37,7 +37,7 @@ VIOLET is an intelligent course generation platform that creates personalized le
 1. **Clone the repository**
    ```bash
    git clone <repository-url>
-   cd VIOLET
+   cd Syllabud
    ```
 
 2. **Set up the backend**
@@ -87,7 +87,7 @@ VIOLET is an intelligent course generation platform that creates personalized le
 ## Project Structure
 
 ```
-VIOLET/
+Syllabud/
 ├── BackEnd/
 │   ├── main.py              # FastAPI application
 │   ├── database.py          # SQLAlchemy setup

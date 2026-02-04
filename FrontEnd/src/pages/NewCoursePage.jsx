@@ -64,7 +64,10 @@ function NewCoursePage() {
       </ThemeToggleWrapper>
 
       <CourseCard>
-        <Logo>VIOLET</Logo>
+        <LogoContainer>
+          <FlowerIcon>🌸</FlowerIcon>
+          <Logo>Syllabud</Logo>
+        </LogoContainer>
         <Title>Create New Course</Title>
         <Subtitle>Tell us what you want to learn and we'll create a personalized course for you.</Subtitle>
 
@@ -148,6 +151,17 @@ const CourseCard = styled(Card)`
   animation: fadeIn 0.5s ease;
 `;
 
+const LogoContainer = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+`;
+
+const FlowerIcon = styled.span`
+  font-size: 20px;
+`;
+
 const Logo = styled.div`
   font-size: 24px;
   font-weight: 700;
@@ -155,7 +169,6 @@ const Logo = styled.div`
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  margin-bottom: 8px;
 `;
 
 const Title = styled.h1`

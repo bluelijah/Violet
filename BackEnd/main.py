@@ -18,8 +18,8 @@ async def lifespan(app: FastAPI):
 
 
 backendApp = FastAPI(
-    title="VIOLET API",
-    description="AI-Powered Personalized Learning Platform",
+    title="Syllabud API",
+    description="Your Personalized Course Creator - Learn What Matters",
     version="1.0.0",
     lifespan=lifespan
 )
@@ -48,7 +48,7 @@ backendApp.include_router(course_router)
 
 @backendApp.get("/")
 async def root():
-    return {"message": "VIOLET API", "docs": "/docs"}
+    return {"message": "Syllabud API", "docs": "/docs"}
 
 
 @backendApp.get("/test-db")

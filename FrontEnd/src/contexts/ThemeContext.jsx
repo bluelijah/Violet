@@ -6,7 +6,7 @@ export const themes = {
   light: {
     name: 'light',
     colors: {
-      // Primary violet palette
+      // Primary purple palette
       primary: '#7C3AED',
       primaryHover: '#6D28D9',
       primaryLight: '#A78BFA',
@@ -52,7 +52,7 @@ export const themes = {
   dark: {
     name: 'dark',
     colors: {
-      // Primary violet palette
+      // Primary purple palette
       primary: '#A78BFA',
       primaryHover: '#8B5CF6',
       primaryLight: '#2D2250',

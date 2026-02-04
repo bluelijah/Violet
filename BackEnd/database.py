@@ -16,7 +16,7 @@ if DATABASE_URL:
 else:
     # Local development fallback to SQLite
     db_dir = os.path.dirname(os.path.abspath(__file__))
-    DATABASE_URL = f"sqlite:///{os.path.join(db_dir, 'violet.db')}"
+    DATABASE_URL = f"sqlite:///{os.path.join(db_dir, 'syllabud.db')}"
     engine = create_engine(
         DATABASE_URL,
         connect_args={"check_same_thread": False}  # Needed for SQLite

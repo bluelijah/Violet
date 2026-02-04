@@ -9,7 +9,7 @@ from database import get_db
 from models import User
 
 # Configuration
-SECRET_KEY = "violet-secret-key-change-in-production"  # In production, use env variable
+SECRET_KEY = "syllabud-secret-key-change-in-production"  # In production, use env variable
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 60 * 24  # 24 hours
 

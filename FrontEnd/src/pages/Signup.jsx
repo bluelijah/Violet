@@ -100,6 +100,17 @@ const SignupCard = styled(Card)`
 `;
 
 
+const LogoContainer = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+`;
+
+const FlowerIcon = styled.span`
+  font-size: 36px;
+`;
+
 const Logo = styled.h1`
   font-size: 42px;
   font-weight: 700;
@@ -107,7 +118,7 @@ const Logo = styled.h1`
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  margin-bottom: 8px;
+  margin: 0;
 `;
 
 const Subtitle = styled.p`
@@ -153,7 +164,7 @@ const LoginLink = styled(Link)`
   }
 `;
 
-const VioletFlower = ({ left, height, delay, swayDuration }) => (
+const Flower = ({ left, height, delay, swayDuration }) => (
   <FlowerContainer $left={left} $height={height} $delay={delay}>
     <FlowerWrapper $swayDuration={swayDuration}>
       <FlowerHead>
@@ -216,17 +227,20 @@ function Signup() {
         <ThemeToggle />
       </ThemeToggleWrapper>
 
-      {/* Violet flowers */}
-      <VioletFlower left="4%" height="40vh" delay="0.4s" swayDuration="5s" />
-      <VioletFlower left="10%" height="22vh" delay="0.9s" swayDuration="4.5s" />
-      <VioletFlower left="18%" height="55vh" delay="0.3s" swayDuration="5.2s" />
+      {/* Flowers */}
+      <Flower left="4%" height="40vh" delay="0.4s" swayDuration="5s" />
+      <Flower left="10%" height="22vh" delay="0.9s" swayDuration="4.5s" />
+      <Flower left="18%" height="55vh" delay="0.3s" swayDuration="5.2s" />
 
-      <VioletFlower left="70%" height="28vh" delay="0.8s" swayDuration="4.7s" />
-      <VioletFlower left="78%" height="45vh" delay="0.4s" swayDuration="5.4s" />
-      <VioletFlower left="92%" height="35vh" delay="0.6s" swayDuration="5.1s" />
+      <Flower left="70%" height="28vh" delay="0.8s" swayDuration="4.7s" />
+      <Flower left="78%" height="45vh" delay="0.4s" swayDuration="5.4s" />
+      <Flower left="92%" height="35vh" delay="0.6s" swayDuration="5.1s" />
 
       <SignupCard>
-        <Logo>VIOLET</Logo>
+        <LogoContainer>
+          <FlowerIcon>🌸</FlowerIcon>
+          <Logo>Syllabud</Logo>
+        </LogoContainer>
         <Subtitle>Create your account</Subtitle>
 
         <Form onSubmit={handleSubmit}>

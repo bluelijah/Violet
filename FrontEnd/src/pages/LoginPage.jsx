@@ -79,7 +79,7 @@ const FlowerStem = styled.div`
   z-index: -1;
 `;
 
-const VioletFlower = ({ left, height, delay, swayDuration }) => (
+const Flower = ({ left, height, delay, swayDuration }) => (
   <FlowerContainer $left={left} $height={height} $delay={delay}>
     <FlowerWrapper $swayDuration={swayDuration}>
       <FlowerHead>
@@ -119,6 +119,21 @@ const LoginCard = styled(Card)`
   }
 `;
 
+const LogoContainer = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+`;
+
+const FlowerIcon = styled.span`
+  font-size: 36px;
+
+  @media (max-width: 480px) {
+    font-size: 28px;
+  }
+`;
+
 const Logo = styled.h1`
   font-size: 42px;
   font-weight: 700;
@@ -126,7 +141,7 @@ const Logo = styled.h1`
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  margin-bottom: 8px;
+  margin: 0;
 
   @media (max-width: 480px) {
     font-size: 32px;
@@ -212,39 +227,42 @@ function LoginPage() {
 
   return (
     <Container>
-      {/* Violet flowers springing up around the sign-in */}
+      {/* Flowers springing up around the sign-in */}
       {/* Far left cluster */}
-      <VioletFlower left="3%" height="25vh" delay="0.7s" swayDuration="5.2s" />
-      <VioletFlower left="6%" height="45vh" delay="0.2s" swayDuration="5s" />
-      <VioletFlower left="10%" height="18vh" delay="0.9s" swayDuration="4.2s" />
+      <Flower left="3%" height="25vh" delay="0.7s" swayDuration="5.2s" />
+      <Flower left="6%" height="45vh" delay="0.2s" swayDuration="5s" />
+      <Flower left="10%" height="18vh" delay="0.9s" swayDuration="4.2s" />
 
       {/* Left side, closer to card */}
-      <VioletFlower left="18%" height="55vh" delay="0.4s" swayDuration="4.5s" />
-      <VioletFlower left="22%" height="30vh" delay="0.55s" swayDuration="5.8s" />
-      <VioletFlower left="26%" height="15vh" delay="1.0s" swayDuration="4.8s" />
-      <VioletFlower left="30%" height="38vh" delay="0.65s" swayDuration="5.3s" />
-      <VioletFlower left="34%" height="22vh" delay="0.85s" swayDuration="4.6s" />
+      <Flower left="18%" height="55vh" delay="0.4s" swayDuration="4.5s" />
+      <Flower left="22%" height="30vh" delay="0.55s" swayDuration="5.8s" />
+      <Flower left="26%" height="15vh" delay="1.0s" swayDuration="4.8s" />
+      <Flower left="30%" height="38vh" delay="0.65s" swayDuration="5.3s" />
+      <Flower left="34%" height="22vh" delay="0.85s" swayDuration="4.6s" />
 
       {/* Right side, closer to card */}
-      <VioletFlower left="66%" height="20vh" delay="0.95s" swayDuration="5.1s" />
-      <VioletFlower left="70%" height="35vh" delay="0.6s" swayDuration="4.9s" />
-      <VioletFlower left="74%" height="12vh" delay="1.1s" swayDuration="5.5s" />
-      <VioletFlower left="78%" height="42vh" delay="0.45s" swayDuration="4.4s" />
-      <VioletFlower left="82%" height="28vh" delay="0.75s" swayDuration="5.7s" />
+      <Flower left="66%" height="20vh" delay="0.95s" swayDuration="5.1s" />
+      <Flower left="70%" height="35vh" delay="0.6s" swayDuration="4.9s" />
+      <Flower left="74%" height="12vh" delay="1.1s" swayDuration="5.5s" />
+      <Flower left="78%" height="42vh" delay="0.45s" swayDuration="4.4s" />
+      <Flower left="82%" height="28vh" delay="0.75s" swayDuration="5.7s" />
 
       {/* Far right cluster */}
-      <VioletFlower left="88%" height="50vh" delay="0.3s" swayDuration="5.5s" />
-      <VioletFlower left="92%" height="16vh" delay="1.05s" swayDuration="4.3s" />
-      <VioletFlower left="95%" height="60vh" delay="0.35s" swayDuration="4.8s" />
-      <VioletFlower left="97%" height="32vh" delay="0.8s" swayDuration="5.4s" />
+      <Flower left="88%" height="50vh" delay="0.3s" swayDuration="5.5s" />
+      <Flower left="92%" height="16vh" delay="1.05s" swayDuration="4.3s" />
+      <Flower left="95%" height="60vh" delay="0.35s" swayDuration="4.8s" />
+      <Flower left="97%" height="32vh" delay="0.8s" swayDuration="5.4s" />
 
       <ThemeToggleWrapper>
         <ThemeToggle />
       </ThemeToggleWrapper>
 
       <LoginCard>
-        <Logo>VIOLET</Logo>
-        <Subtitle>Your AI-powered learning companion</Subtitle>
+        <LogoContainer>
+          <FlowerIcon>🌸</FlowerIcon>
+          <Logo>Syllabud</Logo>
+        </LogoContainer>
+        <Subtitle>Your Personalized Course Creator - Learn What Matters</Subtitle>
 
         <Form onSubmit={handleSubmit}>
           {error && <ErrorMessage>{error}</ErrorMessage>}
