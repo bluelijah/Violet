@@ -5,6 +5,7 @@ import os
 
 from routes.auth_routes import router as auth_router
 from routes.course_routes import router as course_router
+from routes.admin_routes import router as admin_router
 from database import init_db, engine
 from sqlalchemy import text
 
@@ -48,6 +49,7 @@ backendApp.add_middleware(
 # Include routers
 backendApp.include_router(auth_router)
 backendApp.include_router(course_router)
+backendApp.include_router(admin_router)
 
 
 @backendApp.get("/")

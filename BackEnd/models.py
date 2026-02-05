@@ -44,3 +44,21 @@ class Course(Base):
 
     # Relationships
     user = relationship("User", back_populates="courses")
+
+
+class APIUsage(Base):
+    __tablename__ = "api_usage"
+
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
+    course_id = Column(Integer, ForeignKey("courses.id"), nullable=True)
+    model_used = Column(String(100), nullable=False)
+    input_tokens = Column(Integer, nullable=False, default=0)
+    output_tokens = Column(Integer, nullable=False, default=0)
+    total_tokens = Column(Integer, nullable=False, default=0)
+    cache_read_tokens = Column(Integer, default=0)
+    cache_creation_tokens = Column(Integer, default=0)
+    created_at = Column(DateTime(timezone=True), server_default=func.now())
+
+    # Relationships
+    user = relationship("User")

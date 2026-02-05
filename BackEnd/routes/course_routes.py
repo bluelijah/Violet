@@ -4,11 +4,16 @@ from pydantic import BaseModel, Field
 from typing import List, Optional
 from dotenv import load_dotenv
 import os
+import logging
 
 load_dotenv()
 
+# Set up logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
 from database import get_db
-from models import User, UserPreferences, Course
+from models import User, UserPreferences, Course, APIUsage
 from auth import get_current_user
 from course_creator import (
     CourseCreator,
@@ -189,7 +194,7 @@ async def create_course(
         creator = get_course_creator()
         generated = creator.create_course(user_profile, course_request)
 
-        # Save to database
+        # Save course to database
         new_course = Course(
             user_id=current_user.id,
             title=generated.title,
@@ -200,6 +205,31 @@ async def create_course(
         db.add(new_course)
         db.commit()
         db.refresh(new_course)
+
+        # Calculate total tokens
+        total_tokens = generated.input_tokens + generated.output_tokens
+
+        # Log token usage to console
+        logger.info(
+            f"TOKEN USAGE | user_id={current_user.id} | course_id={new_course.id} | "
+            f"model={generated.model_used} | input={generated.input_tokens} | "
+            f"output={generated.output_tokens} | total={total_tokens} | "
+            f"cache_read={generated.cache_read_tokens} | cache_create={generated.cache_creation_tokens}"
+        )
+
+        # Save token usage to database
+        usage_record = APIUsage(
+            user_id=current_user.id,
+            course_id=new_course.id,
+            model_used=generated.model_used,
+            input_tokens=generated.input_tokens,
+            output_tokens=generated.output_tokens,
+            total_tokens=total_tokens,
+            cache_read_tokens=generated.cache_read_tokens,
+            cache_creation_tokens=generated.cache_creation_tokens
+        )
+        db.add(usage_record)
+        db.commit()
 
         return CourseCreateResponse(
             course=CourseResponse(
